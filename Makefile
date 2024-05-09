@@ -1,37 +1,79 @@
+# NAME = cub3d
+
+# CC = gcc
+
+# FLAGS = -Wall -Wextra -Werror -g3
+
+# SRCS = 	main.c\
+
+# INC = cub3d.h
+
+# OBJS = $(patsubst srcs/%.c,objs/%.o,$(SRCS))
+
+# $(NAME) : $(OBJS)
+# 	make -C libft/
+# 	make -C minilibx-linux/
+# 	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
+
+# objs/%.o : %.c $(INC)
+# 	mkdir -p $(dir $@)
+# 	$(CC) $(FLAGS) -I includes/ -c $< -o $@
+
+# all : $(NAME)
+
+# clean :
+# 	rm -rf objs/
+# 	@make clean -C libft/ 
+
+# fclean : clean
+# 	rm -f $(NAME)
+# 	@make fclean -C libft
+
+# re : fclean all
+
+# test : re
+# 	./cub3d
+
+# .PHONY : clean fclean re all test
+
 NAME = cub3d
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -Wall -Wextra -Werror
 
-SRCS = 	srcs/main.c\
+SRCS = srcs/main.c
 
 INC = cub3d.h
 
-OBJS = $(patsubst srcs/%.c,objs/%.o,$(SRCS))
+OBJS = $(SRCS:.c=.o)
 
-$(NAME) : $(OBJS)
+$(NAME): $(OBJS)
 	make -C libft/
 	make -C minilibx-linux/
 	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
 
-objs/%.o : srcs/%.c $(INC)
-	mkdir -p $(dir $@)
-	$(CC) $(FLAGS) -I includes/ -c $< -o $@
+%.o: %.c $(INC)
+	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
 
-all : $(NAME)
+all: $(NAME)
 
-clean :
-	rm -rf objs/
-	@make clean -C libft/ 
+clean:
+	@rm -rf objs
+	@make clean -C libft/
 
-fclean : clean
-	rm -f $(NAME)
+fclean: clean
+	@rm -f $(NAME)
 	@make fclean -C libft
 
-re : fclean all
+re: fclean all
 
-test : re
+test: re
 	./cub3d
 
-.PHONY : clean fclean re all test
+# bacasable1 : re
+# 	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o bs1 -lX11 -lXext -lm -lmlx
+# 	@make fclean
+
+
+.PHONY: clean fclean re all test

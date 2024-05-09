@@ -1,0 +1,50 @@
+.cub :
+	Elements de contexte
+		des elements indiquant ou trouver les sprites
+		ils sont separes par 1 ou plusieurs lignes
+		NO = texture NORTH WE = texture WEST ... F = RGB Floor C = RGB Ceil
+		
+		Pas erreur : 
+			espaces entre les composants d' 1 seul element (les tabulaions ne fonctionnent pas sur le projet de robin)
+			plusieurs sauts de ligne entre les elements
+		exemple d'elements valides au parsing :
+			NO      sprites/naturalbricks_hd_almostlight.xpm   
+			SO  sprites/naturalbricks_hd_almostlight.xpm
+
+			WE  sprites/naturalbricks_hd_verydark.xpm	
+			EA  sprites/naturalbricks_hd_verydark.xpm
+			F   104,106,105
+			C   40,177,214 
+
+		Erreurs :
+			espaces avant le 1er composant de l'element
+			autre char qu' espace utilise entre les composants d' un meme elem
+			un seul element est decrit sur plus d' une ligne
+			manque 1 element (sur les 6 Attendus)
+
+		exemple d'elements invalides au parsing (chaque ligne est une erreur differente):
+			 NO      sprites/naturalbricks_hd_almostlight.xpm
+			NOsprites/naturalbricks_hd_almostlight.xpm
+			NO	sprites/naturalbricks_hd_almostlight.xpm
+			NO
+			sprites/naturalbricks_hd_almostlight.xpm
+
+		Autre erreurs :
+			NO SO WE EA
+				format du fichier de texture invalide
+				fichier de texture inexistant
+				fichier de texture non accessible
+		
+			F et C
+				format de couleur invalide (valeur neg, >255, plus de 3 valeurs format incorrect) (attendu = R,G,B)
+
+		
+
+
+
+
+
+	Description de la map
+		0 pour vides
+		1 pour murs
+		N, E, W, S => 1 seul de ces char est present dans la description de map et la lettre rpz l' orientation initiale du joueur
