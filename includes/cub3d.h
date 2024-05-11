@@ -10,7 +10,10 @@
 #include <stdio.h>
 
 
+# define END_PLAYER "Game succesfully exited by the player\n"
+
 # define E_NB_ARGS "Invalid nuber of arguments: usage: <exe> <map_file>\n"
+
 
 typedef struct s_cub3d
 {
