@@ -11,7 +11,7 @@ void ray_casting(void *mlx_ptr, void *win_ptr, int map[4][6]) {
     double posY = 1.5; // Position initiale Y du joueur
     double dirX = 0.0; // Direction initiale X du joueur (sud)
     double dirY = 1.0; // Direction initiale Y du joueur (sud)
-    double FOV = 140.0; // FOV de 60 degrés
+    double FOV = 60.0; // FOV de 60 degrés
     double FOV_rad = FOV * M_PI / 180.0; // Conversion en radians
 
     double planeX = dirY * tan(FOV_rad / 2.0);

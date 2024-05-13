@@ -12,6 +12,7 @@
 
 #include "cub3d.h"
 
+//bonus
 float	get_open_percentage(t_cub3d *cub3d)
 {
 	int	i;
@@ -106,6 +107,7 @@ void	raycast(t_cub3d *cub3d, t_raycast *raycast)
 	hit_door = 1;
 	while (x < SCREEN_WIDTH)
 	{
+		//on fait un balayage de l'ecran de gauche a droite
 		raycast_loop(cub3d, raycast, x, &hit_door);
 		x++;
 	}
