@@ -31,9 +31,27 @@ bool	is_valid_extension_path(char *path, char *extension)
 	int		path_len;
 
 	path_len = ft_strlen(path);
-	if (path_len < 5)
+	// printf("path = '%s'", path);//debug hugo
+	if (path_len < 5) //check if file name contains 1 letter min (plus extension)
 		return (false);
 	if (ft_strcmp(extension, &path[path_len - (ft_strlen(extension))]))
+		return (false);
+	return (true);
+}
+
+//hugo version
+//la taille de l' extension n' est pas hard codee a 3
+bool	is_valid_extension_path_hugo(char *path, char *extension)
+{
+	size_t		path_len;
+	size_t		ext_len;
+
+	path_len = ft_strlen(path);
+	ext_len = ft_strlen(extension);
+	// printf("path = '%s'", path);//debug hugo
+	if (path_len - ext_len < 1)
+		return (false);
+	if (ft_strcmp(extension, &path[path_len - ext_len]))
 		return (false);
 	return (true);
 }

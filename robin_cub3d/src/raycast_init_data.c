@@ -42,10 +42,10 @@ static void	conditional_inizialize(t_cub3d *cub3d, t_raycast *raycast)
 
 void	raycast_initialize(t_cub3d *cub3d, t_raycast *raycast, int x)
 {
-	raycast->camerax = 2 * x / (double)SCREEN_WIDTH - 1;
+	raycast->camerax = 2 * x / (double)SCREEN_WIDTH - 1; // position du rayon sur l' image projetee (0 = centre -1 = gauche et 1 = droite)
 	raycast->raydirx = cub3d->player.dirx + raycast->planex * raycast->camerax;
 	raycast->raydiry = cub3d->player.diry + raycast->planey * raycast->camerax;
-	raycast->mapx = (int)cub3d->player.posx;
+	raycast->mapx = (int)cub3d->player.posx; // on pourrait mettre un pointeur vers player ?
 	raycast->mapy = (int)cub3d->player.posy;
 	raycast->deltadistx = 1e30;
 	raycast->deltadisty = 1e30;

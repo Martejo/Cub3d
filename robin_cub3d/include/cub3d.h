@@ -140,11 +140,19 @@ typedef struct s_colors
 
 typedef struct s_player
 {
-	char	start_dir;
-	double	posx;
+	char	start_dir; // le symbole permettant de definir la direction initiale des vecteurs representant le regard du joueur (par rapport au repere orthonorme informatique) N => dirx = 0 diry = -1 ? S => dirx 0 diry 1 
+	//la position du joueur sur la map2d
+	double	posx; 
 	double	posy;
-	double	dirx;
-	double	diry;
+
+	// on connait l'angle initial du regard du joueur gr^ace a la lettre N = -Pi/2 
+	//si le regard devie, on a juste a faire varier la valeur de l'angle de vue
+	//la valeur d' angle augmente quand on tourne le regard `a droite et decroit quand on le tourne `a gauche 
+	//attention quand on fait un tour complet dans un sens ou dans l' autre il faut reinitialiser les valeurs d' angle (on 360 + droite = 0)
+	
+	//int angle; //valeur d' angle entre 0 et 360
+	double	dirx; // on l'obtient ewn faisant cos(notre angle)
+	double	diry; // on l' obtient en faisant sin(notre angle)
 }	t_player;
 
 typedef struct s_image {
@@ -159,8 +167,9 @@ typedef struct s_image {
 
 typedef struct s_raycast
 {
-	double	camerax;
-	double	raydirx;
+	double	camerax; //position relative de la ligne par rapport au centre de la camera du joueur (varie entre -1 = gauche 0 = centre et + 1 = droite )
+	//double rayangle ? hugo
+	double	raydirx; 
 	double	raydiry;
 	double	planex;
 	double	planey;

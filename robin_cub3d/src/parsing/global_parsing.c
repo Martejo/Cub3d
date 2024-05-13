@@ -12,32 +12,44 @@
 
 #include "cub3d.h"
 
-void	init_structure(t_cub3d *prog)
-{
-	int	i;
+// void	init_structure(t_cub3d *prog)
+// {
+// 	int	i;
 
-	i = -1;
-	prog->file_to_strs = NULL;
+// 	i = -1;
+// 	prog->file_to_strs = NULL;
+// 	prog->wall_textures = (t_wall_textures)
+// 	{
+// 		.cardinals_array = {"NO ", "SO ", "WE ", "EA ", "F ", "C "},
+// 		.textures_paths = {NULL, NULL, NULL, NULL, NULL, NULL}
+// 	};
+// 	while (++i < 8)
+// 	{
+// 		if (i < 5)
+// 			prog->sprites[i].reference = NULL;
+// 		prog->torch_sprites[i].reference = NULL;
+// 	}
+// 	prog->raycast_img.img = NULL;
+// 	prog->map_struct.map_strs = NULL;
+// 	prog->map_struct.height = 0;
+// 	prog->map_struct.width = 0;
+// }
+
+//Hugo version (working when tested)
+void	init_structure_hugo(t_cub3d *prog)
+{
+	ft_bzero(prog, sizeof(t_cub3d));
 	prog->wall_textures = (t_wall_textures)
 	{
 		.cardinals_array = {"NO ", "SO ", "WE ", "EA ", "F ", "C "},
 		.textures_paths = {NULL, NULL, NULL, NULL, NULL, NULL}
 	};
-	while (++i < 8)
-	{
-		if (i < 5)
-			prog->sprites[i].reference = NULL;
-		prog->torch_sprites[i].reference = NULL;
-	}
-	prog->raycast_img.img = NULL;
-	prog->map_struct.map_strs = NULL;
-	prog->map_struct.height = 0;
-	prog->map_struct.width = 0;
 }
 
 void	global_parsing(t_cub3d *prog, char *file_name)
 {
-	init_structure(prog);
+	// init_structure(prog);
+	init_structure_hugo(prog);
 	if (!is_valid_extension_path(file_name, ".cub") || !file_exist(file_name))
 		error_message_and_exit(1, FD_CUB_MSG);
 	split_file_string(prog, file_name);

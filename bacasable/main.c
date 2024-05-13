@@ -9,12 +9,12 @@
 void ray_casting(void *mlx_ptr, void *win_ptr, int map[5][6])
 {
     int w = 800, h = 600;
-    double posX = 3.0;  // Position initiale X du joueur
-    double posY = 4.0;  // Position initiale Y du joueur
-    double dirX = -1.0;  // Direction initiale X du joueur (nord)
-    double dirY = 0.0; // Direction initiale Y du joueur (nord)
-    double FOV = 66.0;  // FOV de 60 degrés
-   double FOV_rad = FOV * M_PI / 180.0; // Conversion en radians
+    double posX = 1.5; // Position initiale X du joueur
+    double posY = 1.5; // Position initiale Y du joueur
+    double dirX = 0.0; // Direction initiale X du joueur (sud)
+    double dirY = 1.0; // Direction initiale Y du joueur (sud)
+    double FOV = 60.0; // FOV de 60 degrés
+    double FOV_rad = FOV * M_PI / 180.0; // Conversion en radians
 
     double planeY= tan(FOV_rad / 2.0); // largeur du plan de la caméra horizontalement
    // printf("%f, %f\n", FOV_rad, planeX);
