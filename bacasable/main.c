@@ -3,73 +3,104 @@
 
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
+#include <stdio.h>
 
-void ray_casting(void *mlx_ptr, void *win_ptr, int map[4][6]) {
-    
+
+void ray_casting(void *mlx_ptr, void *win_ptr, int map[5][6])
+{
     int w = 800, h = 600;
-    double posX = 1.5; // Position initiale X du joueur
-    double posY = 1.5; // Position initiale Y du joueur
-    double dirX = 0.0; // Direction initiale X du joueur (sud)
-    double dirY = 1.0; // Direction initiale Y du joueur (sud)
-    double FOV = 140.0; // FOV de 60 degrés
-    double FOV_rad = FOV * M_PI / 180.0; // Conversion en radians
+    double posX = 3.0;  // Position initiale X du joueur
+    double posY = 4.0;  // Position initiale Y du joueur
+    double dirX = -1.0;  // Direction initiale X du joueur (nord)
+    double dirY = 0.0; // Direction initiale Y du joueur (nord)
+    double FOV = 66.0;  // FOV de 60 degrés
+   double FOV_rad = FOV * M_PI / 180.0; // Conversion en radians
 
-    double planeX = dirY * tan(FOV_rad / 2.0);
-    double planeY = -dirX * tan(FOV_rad / 2.0);
-    for (int x = 0; x < w; x++) {
+    double planeY= tan(FOV_rad / 2.0); // largeur du plan de la caméra horizontalement
+   // printf("%f, %f\n", FOV_rad, planeX);
+     double planeX=  0.6494; // -dirX * tan(FOV_rad / 2.0); // largeur du plan de la caméra horizontalement
+   // double planeY = 0.0;                // pas de déplacement vertical du plan
+
+    // Reste du code pour ray-casting...
+
+
+    //double cameraX = 2 * 0 / (double)w - 1;
+    for (int x = 0; x < h; x++)
+    {
+    
         double cameraX = 2 * x / (double)w - 1;
         double rayDirX = dirX + planeX * cameraX;
         double rayDirY = dirY + planeY * cameraX;
+        printf("%f, %f, %f, %f\n", cameraX, rayDirX, rayDirY, planeX);
 
-        int mapX = (int)posX;
-        int mapY = (int)posY;
+         int mapX = (int)posX;
+      int mapY = (int)posY;
 
-        double sideDistX;
-        double sideDistY;
+      //length of ray from current position to next x or y-side
+      double sideDistX;
+      double sideDistY;
 
-        double deltaDistX = fabs(1 / rayDirX);
-        double deltaDistY = fabs(1 / rayDirY);
-        double perpWallDist;
+       //length of ray from one x or y-side to next x or y-side
+      double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+      double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+      double perpWallDist;
 
-        int stepX, stepY;
-        int hit = 0; // was there a wall hit?
-        int side; // was a NS or a EW wall hit?
+      //what direction to step in x or y-direction (either +1 or -1)
+      int stepX;
+      int stepY;
+
+      int hit = 0; //was there a wall hit?
+      int side; //was a NS or a EW wall hit?
 
         // Calculate step and initial sideDist
-        if (rayDirX < 0) {
+        if (rayDirX < 0)
+        {
             stepX = -1;
             sideDistX = (posX - mapX) * deltaDistX;
-        } else {
+        }
+        else
+        {
             stepX = 1;
             sideDistX = (mapX + 1.0 - posX) * deltaDistX;
         }
-        if (rayDirY < 0) {
+        if (rayDirY < 0)
+        {
             stepY = -1;
             sideDistY = (posY - mapY) * deltaDistY;
-        } else {
+        }
+        else
+        {
             stepY = 1;
             sideDistY = (mapY + 1.0 - posY) * deltaDistY;
         }
 
         // Perform DDA
-        while (hit == 0) {
+        while (hit == 0)
+        {
             // jump to next map square, OR in x-direction, OR in y-direction
-            if (sideDistX < sideDistY) {
+            if (sideDistX < sideDistY)
+            {
                 sideDistX += deltaDistX;
                 mapX += stepX;
                 side = 0;
-            } else {
+            }
+            else
+            {
                 sideDistY += deltaDistY;
                 mapY += stepY;
                 side = 1;
             }
             // Check if ray has hit a wall
-            if (map[mapY][mapX] > 0) hit = 1;
+            if (map[mapX][mapY] > 0) hit = 1;
         }
 
         // Calculate distance projected on camera direction
-        if (side == 0) perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
-        else perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
+          if(side == 0) perpWallDist = (sideDistX - deltaDistX);
+      else          perpWallDist = (sideDistY - deltaDistY);
+        // if (side == 0)
+        //     perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
+        // else 
+        //     perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
 
         // Calculate height of line to draw on screen
         int lineHeight = (int)(h / perpWallDist);
