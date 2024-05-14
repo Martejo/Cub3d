@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_init_data.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbicanic <rbicanic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 19:03:44 by rbicanic          #+#    #+#             */
-/*   Updated: 2022/06/05 22:06:21 by rbicanic         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:15:23 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	conditional_inizialize(t_cub3d *cub3d, t_raycast *raycast)
 
 void	raycast_initialize(t_cub3d *cub3d, t_raycast *raycast, int x)
 {
-	raycast->camerax = 2 * x / (double)SCREEN_WIDTH - 1; // position du rayon sur l' image projetee (0 = centre -1 = gauche et 1 = droite)
+	//x = colonne de l'image raycastee que l' on souhaite afficher (valeur de 0 a WIDTH)
+	raycast->camerax = 2 * x / (double)SCREEN_WIDTH - 1; // resultat de la normalisation de x (0 = centre -1 = gauche et 1 = droite)
 	raycast->raydirx = cub3d->player.dirx + raycast->planex * raycast->camerax;
 	raycast->raydiry = cub3d->player.diry + raycast->planey * raycast->camerax;
 	raycast->mapx = (int)cub3d->player.posx; // on pourrait mettre un pointeur vers player ?

@@ -18,6 +18,28 @@ typedef struct s_ray
     float yo;
 } t_ray;
 
+typedef struct s_vector //utile pour minimap qui n'a pas besoin de valeurs float
+{
+    double  x;
+    double  y;
+} t_vector;
+
+//utile ? 
+typedef struct s_mapcoor
+{
+    t_vector pl_pos;
+    //direction du regard
+    t_vector pl_dir;
+    
+    //tracer l'ecran
+    t_vector plane; //debut ecran = plane 
+
+    t_vector ray[WIDTH];
+
+
+} t_cub3d;
+
+
 typedef struct s_cub3d
 {
     void *mlx;
@@ -39,6 +61,16 @@ typedef struct s_cub3d
 #define S 115
 #define D 100
 #define PI 3.1415926535
+
+// //ajouts hugo
+// double unit_vector_to_dir(t_vector v) // on a pas besoin de cette fonction car a aucun moment on a besoin d'un angle
+// {
+//     double vdir;
+//     vdir 
+    
+// }
+
+
 
 void draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color)
 {
@@ -75,6 +107,14 @@ void draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color)
 	
 // }
 
+t_vector to_minimap_coor(const t_vector v)
+{
+    t_vector v_minimap;
+
+    v_minimap.x = v.x;
+    v_minimap.y = v.y;
+    return(v_minimap);
+}
 void draw_ray_dir(t_cub3d data)
 {
 	

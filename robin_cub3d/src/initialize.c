@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbicanic <rbicanic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 14:56:57 by cberganz          #+#    #+#             */
-/*   Updated: 2022/06/05 22:06:21 by rbicanic         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:11:46 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	game_initialize(t_cub3d *cub3d)
 		cub3d->mouse_set = 0;
 	cub3d->player.dirx = 0;
 	cub3d->player.diry = -1;
-	cub3d->raycast.planex = 0.66f;
-	cub3d->raycast.planey = 0;
+	cub3d->raycast.planex = 0.66f; //modifier cette valeur correspond a modifier le fov il me semble, pour un bon rendu, un ecran plus large doit rpz un FOV plus grand
+	cub3d->raycast.planey = 0;// a quoi sert cette valeur si on ne represente pas la hauteur ?
 	cub3d->move_speed = MOVE_SPEED;
 	cub3d->camera_speed = CAMERA_SPEED;
 	init_player_direction(cub3d);
