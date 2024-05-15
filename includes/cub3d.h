@@ -1,81 +1,132 @@
-#ifndef CUB3D
-# define CUB3D
+#ifndef CUB3D_H
+# define CUB3D_H
 
 #include "../minilibx-linux/mlx.h"
-#include <../libft/libft.h>
+#include "../libft/libft.h"
 #include <math.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 
+/*
+**Color Definition**
+*/
 
-# define END_PLAYER "Game succesfully exited by the player\n"
+# define RED     "\x1b[31;1m"
+# define GREEN   "\x1b[32m"
+# define YELLOW  "\x1b[33m"
+# define BLUE    "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN    "\x1b[36m"
+# define RESET   "\x1b[0m"
+
+/*
+**Message Definition**
+*/
 
 # define E_NB_ARGS "Invalid nuber of arguments: usage: <exe> <map_file>\n"
+# define FILE_EXTENSION "Error\nWrong file extension. Cub3d need <*.cub>\n"
+# define FILE_PATH "Error\nCannot open map file.\n"
+# define SYNTAX_LINE "Error\nInvalid syntax in configuration.\n"
+# define TEXT_PATH "Error\nInvalid path for north texture.\n"
+# define BAD_COLOR "Error\nInvalid color format for floor.\n"
+# define WRONG_CHR "Error\nInvalid character in map.\n"
+# define MAP_WALL "Error\nMap is not closed by walls.\n"
+# define EMPTY_START "Error\nNo starting position in map.\n"
+# define MULT_START "Error\nMultiple starting positions in map.\n"
+# define MALLOC_ERR_MSG "Malloc error\n"
 
 
-typedef struct s_screen_rc
+
+/*
+**Enum Definition
+*/
+
+enum e_texture_index
 {
-	double	camerax; //position relative de la ligne par rapport au centre de la camera du joueur (varie entre -1 = gauche 0 = centre et + 1 = droite )
-	//double rayangle ? hugo
-	double	raydirx; 
-	double	raydiry;
-	double	planex;
-	double	planey;
-	int		mapx;
-	int		mapy;
-	double	sidedistx;
-	double	sidedisty;
-	double	deltadistx;
-	double	deltadisty;
-	double	perpwalldist;
-	int		stepx;
-	int		stepy;
-	int		hit;
-	int		side;
-	int		lineheight;
-	int		drawstart;
-	int		drawend;
-	int		texnum;
-	int		texx;
-	double	wallx;
-}	t_screen_rc;
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3,
+	F,
+	C
+};
 
-//le strict necessaire pour afficher une image
-typedef struct s_screen_rc
+enum e_id_gc
 {
-	int		x; //colonne de l' ecran affiche
-	//textures (utiliser une structure qui contiendra toutes ces donnees ?)
-	double	dist_tex; //distance de la texture a afficher
-	int		side; //le cote de la texture a afficher
+	STRUCT = 0,
+	ARRAY,
+	MLX,
+	TMP
+};
+
+/*
+**Structure Definition
+*/
+
+// Structure player
+
+//Structure ray
+
+typedef struct s_text
+{
+	char *north_texture;
+	char *south_texture;
+	char *west_texture;
+	char *east_texture;
+	int floor_color;
+	int ceiling_color;
+}	t_text;
 
 
-}	t_screen_rc;
+typedef struct s_vector
+{
+	double x;
+	double y;
+} t_vector;
+
+
+typedef struct s_map
+{
+	char **grid;
+	int width;
+	int height;
+}	t_map;
+
+typedef struct s_mlx
+{
+	void *mlx_ptr;
+	void *win_ptr;
+	void *img_ptr;
+	char *img_data;
+	int addr;
+	int size_line;
+	int endian;
+	int	win_height;
+	int	win_width;
+}	t_mlx;
 
 typedef struct s_cub3d
 {
-	void			*mlx;
-	void			*mlx_win;
-	char			**map;
-	int				height;
-	int				width;
-	float			move_speed;
-	float			camera_speed;
-	char			**file_to_strs;
-	t_wall_textures	wall_textures;
-	t_image			sprites[5];
-	t_image			torch_sprites[8];
-	t_map			map_struct;
-	int				doors_nbr;
-	t_door			*doors;
-	uint8_t			mouse_set;
-	t_tex			raycast_img;
-	t_colors		colors;
-	t_keyboard		keyboard;
-	t_screen_rc		raycast;
-	t_player		player;
+	t_mlx	mlx;
+	t_map	map;
+	t_text	text;
 }	t_cub3d;
+
+/*
+**Functions Definition
+*/
+
+/**Error_handling**/
+void	print_and_exit_error(char *msg);
+void	free_and_exit_error(char *msg);
+
+/**Init_structure**/
+t_cub3d	*init_struct(void);
+
+/**Parsing handler**/
+void	parsing_handler(t_cub3d *data, char *file);
 
 
 #endif

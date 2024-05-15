@@ -42,16 +42,19 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = srcs/main.c
+SRCS =	srcs/main.c \
+		srcs/init_struct.c \
+		srcs/error_handling/manage_errors.c \
+		srcs/parsing/parsing_handler.c
 
-INC = cub3d.h
+INC = /includes/cub3d.h
 
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
 	make -C libft/
 	make -C minilibx-linux/
-	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
+	$(CC) $(FLAGS) $(OBJS) -I $(INC) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
 
 %.o: %.c $(INC)
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
@@ -59,7 +62,7 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-	@rm -rf objs
+	@$(RM) $(OBJS)
 	@make clean -C libft/
 
 fclean: clean
