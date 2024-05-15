@@ -1,10 +1,10 @@
-NAME = hugo_test
+NAME = Jo_test
 
 CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = main_hugo.c
+SRCS = main.c
 
 OBJS = $(SRCS:.c=.o)
 
