@@ -45,7 +45,15 @@ FLAGS = -Wall -Wextra -Werror
 SRCS =	srcs/main.c \
 		srcs/init_struct.c \
 		srcs/error_handling/manage_errors.c \
-		srcs/parsing/parsing_handler.c
+		srcs/parsing/parsing_handler.c \
+		srcs/parsing/parsing_colors.c \
+		srcs/parsing/parsing_file.c \
+		srcs/parsing/parsing_map.c \
+		srcs/parsing/parsing_map_utils.c \
+		srcs/parsing/parsing_texture.c \
+		srcs/debug/print_debug.c \
+
+
 
 INC = /includes/cub3d.h
 

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 /*
 **Color Definition**
@@ -29,10 +30,10 @@
 # define FILE_EXTENSION "Error\nWrong file extension. Cub3d need <*.cub>\n"
 # define FILE_PATH "Error\nCannot open map file.\n"
 # define SYNTAX_LINE "Error\nInvalid syntax in configuration.\n"
-# define TEXT_PATH "Error\nInvalid path for north texture.\n"
-# define BAD_COLOR "Error\nInvalid color format for floor.\n"
+# define TEXT_PATH "Error\nInvalid path for texture.\n"
+# define COLOR_FORMAT_ERROR "Error\nInvalid color format.\n"
 # define WRONG_CHR "Error\nInvalid character in map.\n"
-# define MAP_WALL "Error\nMap is not closed by walls.\n"
+# define MAP_ERROR "Error\nInvalid map format\n"
 # define EMPTY_START "Error\nNo starting position in map.\n"
 # define MULT_START "Error\nMultiple starting positions in map.\n"
 # define MALLOC_ERR_MSG "Malloc error\n"
@@ -56,6 +57,7 @@ enum e_texture_index
 enum e_id_gc
 {
 	STRUCT = 0,
+	TEXTURE,
 	ARRAY,
 	MLX,
 	TMP
@@ -128,5 +130,30 @@ t_cub3d	*init_struct(void);
 /**Parsing handler**/
 void	parsing_handler(t_cub3d *data, char *file);
 
+/***Parsing_map***/
+char	**extract_map(char **map);
+
+/***Parsing map utils***/
+bool	is_space_line(char *str);
+int	get_size_map(char **map);
+bool	char_is_next_space(char **map, int x, int y);
+
+
+
+/***Parsing_texture***/
+void extract_texture_path(t_text *texture, const char *line, int index_text);
+int	parse_texture_color(t_cub3d *data, char **file);
+int	search_index_texture(char *line);
+
+/***Parsing file***/
+char	**extract_file(char *file);
+void	test_and_open_file(char *file);
+
+/***Parsing colors***/
+void	extract_color(t_text *texture, char *line, int index_color);
+
+/**Debug**/
+void	print_texture_debug(t_text *text);
+void	print_map_debug(t_map *map);
 
 #endif

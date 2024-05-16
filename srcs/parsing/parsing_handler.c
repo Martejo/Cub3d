@@ -1,89 +1,69 @@
 #include "../../includes/cub3d.h"
 
-int	test_and_open_file(char *file)
+//// Rajouter fonction struct player avec postion et caractere a extraire
+///	extract_data_player direction + pos
+
+int	is_empty_line(char *line)
 {
-	int	fd;
+	int	i;
 
-	fd = open(file, O_RDONLY);
-	if (!fd)
-		free_and_exit_error(FILE_PATH);
-	return (fd);
-}
-
-int	get_size_file(int fd)
-{
-	int	size;
-	int	octets;
-	char	*line;
-
-	size = 0;
-	octets = 1;
-	while (octets > 0)
-	{
-		octets = get_next_line(fd, &line);
-		if (octets > 0)
-		{
-			size++;
-			free(line);
-		}
-	}
-	close (fd);
-	if (line)
-		free(line);
-	if (octets < 0)
-		free_and_exit_error(MALLOC_ERR_MSG);
-	return (size);
-}
-
-char **extract_file(int fd, int size)
-{
-	char	**data;
-	char	*line;
-	int		octets;
-	int		i;
-
-	octets = 1;
 	i = 0;
-	data = calloc_gc((size + 1), sizeof(char **), TMP);
-	if (!data)
-		free_and_exit_error(MALLOC_ERR_MSG);
-	while (octets > 0)
+	while (line[i])
 	{
-		octets = get_next_line(fd, &line);
-		if (octets)
-		{
-			data[i] = strdup_gc(line, TMP);
-			free(line);
-			if (!data[i])
-				free_and_exit_error(MALLOC_ERR_MSG);
-			i++;
-		}
+		if (!ft_isspace(line[i]))
+			return (0);
+		i++;
 	}
-	close(fd);
-	if (line)
-		free(line);
-	if (octets < 0)
-		free_and_exit_error(MALLOC_ERR_MSG);
-	return (data);
+	return (1);
+}
+
+int	parse_texture_color(t_cub3d *data, char **file)
+{
+	int	i;
+	int	index_text;
+	int	line_nbr;
+
+	i = 0;
+	line_nbr = 0;
+	while (file[i] && line_nbr < 6)
+	{
+		if (is_empty_line(file[i]))
+			i++;
+		else
+		{
+			index_text = search_index_texture(file[i]);
+			if (index_text == F || index_text == C)
+				extract_color(&data->text, file[i], index_text);
+			else
+				extract_texture_path(&data->text, file[i], index_text);
+			line_nbr++;
+		}
+		i++;
+	}
+	if (file[i] == NULL || line_nbr != 6) 
+		free_and_exit_error(SYNTAX_LINE);
+	return (i);
 }
 
 void	parse_file(t_cub3d *data, char **file)
 {
-	
+	int	i;
+
+	i = parse_texture_color(data, file);
+	data->map.grid = extract_map(&file[i]);
+
 }
 
 void	parsing_handler(t_cub3d *data, char *file)
 {
-	int	fd;
-	int	size;
+	
 	char	**data_file;
 
-	fd = test_and_open_file(file);
-	size = get_size_file(fd);
-	fd = test_and_open_file(file);
-	data_file = extract_file(fd, size);
+	data_file = extract_file(file);
+	if (!data_file)
+		free_and_exit_error(MALLOC_ERR_MSG);
 	parse_file(data, data_file);
-	for (int i = 0; data_file[i]; i++)
-	 	printf("%s\n", data_file[i]);
+	print_texture_debug(&data->text);
+	print_map_debug(&data->map);
 	free_and_exit_error("Ok");
 }
