@@ -1,5 +1,5 @@
-#include "../minilibx-linux/mlx.h"
-#include "../minilibx-linux/mlx_int.h"
+#include "../../minilibx-linux/mlx.h"
+#include "../../minilibx-linux/mlx_int.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -173,26 +173,28 @@ void draw_ray_dir(t_cub3d data)
         int drawX_end = (int)(currentX * data.mapSize);
         int drawY_end = (int)(currentY * data.mapSize);
 
-		//affiche les rayons
-        draw_line(data.mlx, data.mlx_win, drawX_start, drawY_start, drawX_end, drawY_end, 0xFF0000); // Dessinez le rayon en rouge
 		//affiche le screen
 		draw_line(data.mlx, data.mlx_win, (posX + dirX + planeX) * data.mapSize, (posY + dirY + planeY) * data.mapSize, (posX + dirX - planeX) * data.mapSize, (posY + dirY - planeY) * data.mapSize,  0xFFFFFF);
    		//affiche direction
 		draw_line(data.mlx, data.mlx_win, posX * data.mapSize, posY * data.mapSize, dirX_map * data.mapSize, dirY_map * data.mapSize, 0x00FF00); // Ligne verte pour la direction
+		//affiche les rayons
+        draw_line(data.mlx, data.mlx_win, drawX_start, drawY_start, drawX_end, drawY_end, 0xFF0000); // Dessinez le rayon en rouge
 		  // Calculate distance projected on camera direction
     //       if(side == 0) perpWallDist = (sideDistX - deltaDistX);
     //   else          perpWallDist = (sideDistY - deltaDistY);
+        
+        //partie pour le raytracing
         if (side == 0)
             perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
         else 
             perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
 
         // Calculate height of line to draw on screen
-        // int lineHeight = (int)(600 / perpWallDist);
+        int lineHeight = (int)(600 / perpWallDist);
 
         // draw the pixels of the stripe as a vertical line
-        // for(int y = (600 - lineHeight) / 2; y < (600 + lineHeight) / 2; y++)
-        //     mlx_pixel_put(data.mlx, data.mlx_win, x, y, 0xFFFFFF); // Assume 0xFFFFFF is the color of the wall
+        for(int y = (600 - lineHeight) / 2; y < (600 + lineHeight) / 2; y++)
+            mlx_pixel_put(data.mlx, data.mlx_win, x, y, 0xFFFFFF); // Assume 0xFFFFFF is the color of the wall
 		 
     }
 }
@@ -307,6 +309,7 @@ void draw_map(t_cub3d data)
         }
     }
 }
+
 
 int buttons(int key, t_cub3d *data)
 {
