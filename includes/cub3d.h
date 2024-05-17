@@ -11,6 +11,14 @@
 #include <stdbool.h>
 
 /*
+** Define size window
+*/
+# define SCREEN_HEIGHT 600
+# define SCREEN_WIDTH 800
+# define TEXT_WIDTH 64 
+# define TEXT_HEIGHT 64
+
+/*
 **Color Definition**
 */
 
@@ -58,7 +66,7 @@ enum e_id_gc
 {
 	STRUCT = 0,
 	TEXTURE,
-	ARRAY,
+	GRID,
 	MLX,
 	TMP
 };
@@ -71,16 +79,12 @@ enum e_id_gc
 
 //Structure ray
 
-typedef struct s_text
+
+typedef struct s_colors
 {
-	char *north_texture;
-	char *south_texture;
-	char *west_texture;
-	char *east_texture;
 	int floor_color;
 	int ceiling_color;
-}	t_text;
-
+}	t_colors;
 
 typedef struct s_vector
 {
@@ -89,31 +93,50 @@ typedef struct s_vector
 } t_vector;
 
 
-typedef struct s_map
+typedef struct s_grid
 {
 	char **grid;
 	int width;
 	int height;
-}	t_map;
+}	t_grid;
+
+typedef struct s_image
+{
+	void	*img_ptr;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+}	t_image;
+
+typedef struct s_texture
+{
+	void	*reference;      // Référence de l'image dans MiniLibX
+	unsigned char	*pixels;         // Pointeur vers les données des pixels
+	int	x;               // Largeur de l'image
+	int	y;               // Hauteur de l'image
+	int	bits_per_pixel;  // Nombre de bits par pixel
+	int	line_len;        // Longueur d'une ligne en octets
+	int	endian;          // Ordre des octets (endianness)
+}	t_texture;
+
 
 typedef struct s_mlx
 {
-	void *mlx_ptr;
-	void *win_ptr;
-	void *img_ptr;
-	char *img_data;
-	int addr;
-	int size_line;
-	int endian;
-	int	win_height;
-	int	win_width;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	int		width;
+	int		height;
 }	t_mlx;
 
 typedef struct s_cub3d
 {
 	t_mlx	mlx;
-	t_map	map;
-	t_text	text;
+	t_grid	grid;
+	char	**text_path;
+	t_texture	text_img[4];
+	t_colors colors;
+	t_image	framebuffer;
 }	t_cub3d;
 
 /*
@@ -123,9 +146,13 @@ typedef struct s_cub3d
 /**Error_handling**/
 void	print_and_exit_error(char *msg);
 void	free_and_exit_error(char *msg);
+void	close_programm(t_cub3d *cub3d, char *msg, int exit_code);
 
 /**Init_structure**/
 t_cub3d	*init_struct(void);
+void	init_mlx(t_mlx *mlx);
+void	init_image(t_cub3d *data);
+void	init_sprites(t_cub3d *data);
 
 /**Parsing handler**/
 void	process_config_and_map(t_cub3d *data, char *file);
@@ -141,7 +168,7 @@ bool	is_char_adjacent_to_space(char **map, int x, int y);
 
 
 /***Parsing_texture***/
-void	extract_texture_path(t_text *texture, const char *line, int index_text);
+void	extract_texture_path(char ***texture, const char *line, int index_text);
 int		get_texture_index_from_line(char *line);
 
 /***Parsing file***/
@@ -149,10 +176,10 @@ char	**extract_file(char *file);
 void	test_and_open_file(char *file);
 
 /***Parsing colors***/
-void	extract_color(t_text *texture, char *line, int index_color);
+void	extract_color(t_colors *colors, char *line, int index_color);
 
 /**Debug**/
-void	print_texture_debug(t_text *text);
-void	print_map_debug(t_map *map);
+void	print_texture_debug(char **text, t_colors colors);
+void	print_map_debug(t_grid *map);
 
 #endif

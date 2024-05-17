@@ -43,7 +43,9 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 SRCS =	srcs/main.c \
-		srcs/init_struct.c \
+		srcs/init_struct/init_struct.c \
+		srcs/init_struct/init_mlx.c \
+		srcs/init_struct/init_sprite.c \
 		srcs/errors/manage_errors.c \
 		srcs/parsing/parsing_handler.c \
 		srcs/parsing/colors_parsing.c \
@@ -52,6 +54,7 @@ SRCS =	srcs/main.c \
 		srcs/parsing/map_utils_parsing.c \
 		srcs/parsing/texture_parsing.c \
 		srcs/debug/print_debug.c \
+
 
 
 

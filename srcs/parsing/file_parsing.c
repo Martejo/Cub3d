@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:58:10 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:58:30 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:11:48 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static int	get_size_file(char *file)
 	int		fd;
 	char	c;
 
+	size = 0;
+	c = '0';
 	fd = open(file, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		free_and_exit_error(FILE_PATH);
 	while (read(fd, &c, 1))
 		size++;
@@ -45,11 +47,15 @@ static char	*file_to_str(char *file)
 	int		fd;
 	int		i;
 
-	file_data = calloc_gc(get_size_file(file), sizeof(char), TMP);
+	int	size = 0;
+	
+	size = get_size_file(file);
+	printf("size file = %d\n", size);
+	file_data = (char *) calloc_gc(size + 1, sizeof(char), TMP);
 	if (!file_data)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	fd = open(file, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	i = 0;
 	while (read(fd, &file_data[i], 1))

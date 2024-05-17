@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:56:55 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:57:33 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:49:52 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ char	**extract_map(char **map)
 
 	if (is_valid_map(map))
 	{
-		ret_map = calloc_gc(get_size_map(map) + 1, sizeof(char **), ARRAY);
+		ret_map = calloc_gc(get_size_map(map) + 1, sizeof(char **), GRID);
 		i = 0;
 		while (map[i])
 		{
-			ret_map[i] = strdup_gc(map[i], ARRAY);
+			ret_map[i] = strdup_gc(map[i], GRID);
 			i++;
 		}
 		ret_map[i] = NULL;

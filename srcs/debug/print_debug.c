@@ -6,23 +6,23 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:00:13 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 11:00:28 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:53:52 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	print_texture_debug(t_text *text)
+void	print_texture_debug(char **text, t_colors colors)
 {
-	printf("NO = %s\n", text->north_texture);
-	printf("SO = %s\n", text->south_texture);
-	printf("WE = %s\n", text->west_texture);
-	printf("EA = %s\n", text->east_texture);
-	printf("F = %d\n", text->floor_color);
-	printf("C = %d\n", text->ceiling_color);
+	printf("NO = %s\n", text[NORTH]);
+	printf("SO = %s\n", text[SOUTH]);
+	printf("WE = %s\n", text[WEST]);
+	printf("EA = %s\n", text[EAST]);
+	printf("F = %d\n", colors.floor_color);
+	printf("C = %d\n", colors.ceiling_color);
 }
 
-void	print_map_debug(t_map *map)
+void	print_map_debug(t_grid *map)
 {
 	int	i;
 

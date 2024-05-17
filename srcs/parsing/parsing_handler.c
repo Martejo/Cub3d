@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:56:20 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 11:02:56 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:03:40 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	parse_texture_and_color_lines(t_cub3d *data, char **file)
 		{
 			index_text = get_texture_index_from_line(file[i]);
 			if (index_text == F || index_text == C)
-				extract_color(&data->text, file[i], index_text);
+				extract_color(&data->colors, file[i], index_text);
 			else
-				extract_texture_path(&data->text, file[i], index_text);
+				extract_texture_path(&data->text_path, file[i], index_text);
 			line_nbr++;
 		}
 	}
@@ -64,7 +64,8 @@ void	process_config_and_map(t_cub3d *data, char *file)
 	data_file = extract_file(file);
 	if (!data_file)
 		free_and_exit_error(MALLOC_ERR_MSG);
+	data->text_path = calloc_gc(4, sizeof(char **), TEXTURE);
 	i = parse_texture_and_color_lines(data, data_file);
-	data->map.grid = extract_map(&data_file[i]);
+	data->grid.grid = extract_map(&data_file[i]);
 	clear_garbage(TMP, free);
 }
