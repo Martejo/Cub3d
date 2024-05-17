@@ -44,13 +44,13 @@ FLAGS = -Wall -Wextra -Werror
 
 SRCS =	srcs/main.c \
 		srcs/init_struct.c \
-		srcs/error_handling/manage_errors.c \
+		srcs/errors/manage_errors.c \
 		srcs/parsing/parsing_handler.c \
-		srcs/parsing/parsing_colors.c \
-		srcs/parsing/parsing_file.c \
-		srcs/parsing/parsing_map.c \
-		srcs/parsing/parsing_map_utils.c \
-		srcs/parsing/parsing_texture.c \
+		srcs/parsing/colors_parsing.c \
+		srcs/parsing/file_parsing.c \
+		srcs/parsing/map_parsing.c \
+		srcs/parsing/map_utils_parsing.c \
+		srcs/parsing/texture_parsing.c \
 		srcs/debug/print_debug.c \
 
 

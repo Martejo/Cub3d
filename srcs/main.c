@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/17 11:03:27 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/17 11:03:30 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
@@ -18,6 +29,9 @@ int	main(int argc, char **argv)
 
 	args_check(argc, argv);
 	data = init_struct();
-	parsing_handler(data, argv[1]);
+	process_config_and_map(data, argv[1]);
+	print_texture_debug(&data->text);
+	print_map_debug(&data->map);
+	free_and_exit_error("OK\n");
 	return (0);
 }

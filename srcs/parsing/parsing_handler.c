@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_handler.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/17 10:56:20 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/17 11:02:56 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 //// Rajouter fonction struct player avec postion et caractere a extraire
@@ -17,53 +29,42 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
-int	parse_texture_color(t_cub3d *data, char **file)
+int	parse_texture_and_color_lines(t_cub3d *data, char **file)
 {
 	int	i;
 	int	index_text;
 	int	line_nbr;
 
-	i = 0;
+	i = -1;
 	line_nbr = 0;
-	while (file[i] && line_nbr < 6)
+	while (file[++i] && line_nbr < 6)
 	{
 		if (is_empty_line(file[i]))
 			i++;
 		else
 		{
-			index_text = search_index_texture(file[i]);
+			index_text = get_texture_index_from_line(file[i]);
 			if (index_text == F || index_text == C)
 				extract_color(&data->text, file[i], index_text);
 			else
 				extract_texture_path(&data->text, file[i], index_text);
 			line_nbr++;
 		}
-		i++;
 	}
-	if (file[i] == NULL || line_nbr != 6) 
+	if (file[i] == NULL || line_nbr != 6)
 		free_and_exit_error(SYNTAX_LINE);
 	return (i);
 }
 
-void	parse_file(t_cub3d *data, char **file)
+void	process_config_and_map(t_cub3d *data, char *file)
 {
-	int	i;
-
-	i = parse_texture_color(data, file);
-	data->map.grid = extract_map(&file[i]);
-
-}
-
-void	parsing_handler(t_cub3d *data, char *file)
-{
-	
+	int		i;
 	char	**data_file;
 
 	data_file = extract_file(file);
 	if (!data_file)
 		free_and_exit_error(MALLOC_ERR_MSG);
-	parse_file(data, data_file);
-	print_texture_debug(&data->text);
-	print_map_debug(&data->map);
-	free_and_exit_error("Ok");
+	i = parse_texture_and_color_lines(data, data_file);
+	data->map.grid = extract_map(&data_file[i]);
+	clear_garbage(TMP, free);
 }

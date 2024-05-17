@@ -128,22 +128,21 @@ void	free_and_exit_error(char *msg);
 t_cub3d	*init_struct(void);
 
 /**Parsing handler**/
-void	parsing_handler(t_cub3d *data, char *file);
+void	process_config_and_map(t_cub3d *data, char *file);
 
 /***Parsing_map***/
 char	**extract_map(char **map);
 
 /***Parsing map utils***/
 bool	is_space_line(char *str);
-int	get_size_map(char **map);
-bool	char_is_next_space(char **map, int x, int y);
+int		get_size_map(char **map);
+bool	is_char_adjacent_to_space(char **map, int x, int y);
 
 
 
 /***Parsing_texture***/
-void extract_texture_path(t_text *texture, const char *line, int index_text);
-int	parse_texture_color(t_cub3d *data, char **file);
-int	search_index_texture(char *line);
+void	extract_texture_path(t_text *texture, const char *line, int index_text);
+int		get_texture_index_from_line(char *line);
 
 /***Parsing file***/
 char	**extract_file(char *file);
