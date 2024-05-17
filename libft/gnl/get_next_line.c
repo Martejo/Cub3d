@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:59:09 by gemartel          #+#    #+#             */
-/*   Updated: 2023/12/07 16:17:04 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:33:43 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,47 +70,48 @@ int	update_gnl(char *dest, char *src, char **str)
 	return (1);
 }
 
-char	*read_line(int fd, char *str, char *buffer)
+ssize_t	read_line(int fd, char **line, char *buffer)
 {
 	ssize_t	byte_read;
+	size_t	line_len;
 
 	byte_read = 1;
 	while (byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read == -1)
-			break ;
+			return (-1);
 		buffer[byte_read] = '\0';
-		str = extract_line(str, buffer);
-		if (str == NULL)
-			break ;
-		if ((check_new_line(str) > 0 || byte_read == 0) && str[0] != 0)
-			return (str);
+		*line = extract_line(*line, buffer);
+		if (*line == NULL)
+			return (-2);
+		line_len = check_new_line(*line);
+		if ((line_len > 0 || byte_read == 0) && (*line)[0] != '\0')
+			return (line_len);
 	}
-	buffer[0] = '\0';
-	if (str)
-		free(str);
-	return (NULL);
+	return (0);
 }
 
-char	*get_next_line(int fd)
+// return (-1) == error args
+// return (-2) == error malloc line
+// return (-3) == error buffer
+
+ssize_t	get_next_line(int fd, char **line)
 {
 	static t_fd	buffer_memory[MAX_FD];
-	char		*str;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || MAX_FD < 1)
-		return (NULL);
-	str = NULL;
-	str = str_init(str);
-	if (!str)
-		return (NULL);
+	if (fd < 0 || BUFFER_SIZE < 1 || MAX_FD < 1 || !line)
+		return (-1);
+	*line = str_init(*line);
+	if (!*line)
+		return (-2);
 	buffer = init_buffer(fd, buffer_memory);
 	if (!buffer)
-		return (NULL);
-	if (update_gnl(buffer, &buffer[check_new_line(buffer)], &str) < 0)
-		return (free(str), NULL);
-	if (check_new_line(str) > 0)
-		return (str);
-	return (read_line(fd, str, buffer));
+		return (-3);
+	if (update_gnl(buffer, &buffer[check_new_line(buffer)], line) < 0)
+		return (-2);
+	if (check_new_line(*line) > 0)
+		return (gnl_ft_strlen(*line));
+	return (read_line(fd, line, buffer));
 }

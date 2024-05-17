@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_errors.c                                    :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:59:21 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:59:25 by gemartel         ###   ########.fr       */
+/*   Created: 2024/05/17 11:01:09 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/17 11:01:20 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	print_and_exit_error(char *msg)
+t_cub3d	*init_struct(void)
 {
-	ft_printf_fd(2, "%s%s%s\n", RED, msg, RESET);
-	exit(EXIT_FAILURE);
-}
+	t_cub3d	*data;
 
-void	free_and_exit_error(char *msg)
-{
-	ft_printf_fd(2, "%s%s%s\n", RED, msg, RESET);
-	clear_garbage(TEXTURE, free);
-	clear_garbage(ARRAY, free);
-	clear_garbage(TMP, free);
-	clear_garbage(STRUCT, free);
-	exit(EXIT_FAILURE);
+	data = calloc_gc(1, sizeof(t_cub3d), STRUCT);
+	if (!data)
+		print_and_exit_error(MALLOC_ERR_MSG);
+	return (data);
 }

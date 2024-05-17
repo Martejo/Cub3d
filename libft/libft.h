@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:35:30 by hanglade          #+#    #+#             */
-/*   Updated: 2024/03/08 15:20:28 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:35:21 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_fd
 
 char	*ft_strdup(const char *str);
 size_t	gnl_ft_strlen(char *s);
-char	*get_next_line(int fd);
+ssize_t	get_next_line(int fd, char **line);
 char	*str_init(char *s);
 char	*init_buffer(int fd, t_fd *buffer_memory);
 

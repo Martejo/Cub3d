@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_errors.c                                    :+:      :+:    :+:   */
+/*   print_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:59:21 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:59:25 by gemartel         ###   ########.fr       */
+/*   Created: 2024/05/17 11:00:13 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/17 11:00:28 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	print_and_exit_error(char *msg)
+void	print_texture_debug(t_text *text)
 {
-	ft_printf_fd(2, "%s%s%s\n", RED, msg, RESET);
-	exit(EXIT_FAILURE);
+	printf("NO = %s\n", text->north_texture);
+	printf("SO = %s\n", text->south_texture);
+	printf("WE = %s\n", text->west_texture);
+	printf("EA = %s\n", text->east_texture);
+	printf("F = %d\n", text->floor_color);
+	printf("C = %d\n", text->ceiling_color);
 }
 
-void	free_and_exit_error(char *msg)
+void	print_map_debug(t_map *map)
 {
-	ft_printf_fd(2, "%s%s%s\n", RED, msg, RESET);
-	clear_garbage(TEXTURE, free);
-	clear_garbage(ARRAY, free);
-	clear_garbage(TMP, free);
-	clear_garbage(STRUCT, free);
-	exit(EXIT_FAILURE);
+	int	i;
+
+	i = 0;
+	while (map->grid[i])
+	{
+		printf("%s\n", map->grid[i]);
+		i++;
+	}
 }
