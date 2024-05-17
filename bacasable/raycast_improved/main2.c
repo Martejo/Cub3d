@@ -65,8 +65,8 @@ typedef struct s_grid
 
 typedef struct t_dda
 {
-    double  dist;
-    char    orientation;
+    double dist;
+    char orientation;
 } t_dda;
 
 typedef struct s_ray
@@ -91,7 +91,6 @@ typedef struct s_cub3d
 {
     void *mlx;
     void *mlx_win;
-    t_ray ray;
     t_grid grid;
     t_player player;
 } t_cub3d;
@@ -113,21 +112,22 @@ double process_wall_dist(char last_side_tested, const t_ray *ray)
     else
         return ((ray->grid_pos.y - ray->true_pos.y + (1 - ray->step_direction.y) / 2) / ray->dir.y);
 }
+
 char process_wall_orientation(const t_player *player, char last_side_tested)
 {
     if (last_side_tested == 'x')
     {
         if (player->dir.x > 0)
-            return ('E');
+            return 'E'; // East
         else
-            return('W');
+            return 'W'; // West
     }
     else
     {
         if (player->dir.y > 0)
-            return('S');
+            return 'S'; // South
         else
-            return('N');
+            return 'N'; // North
     }
 }
 
@@ -193,30 +193,15 @@ void get_ray_config_dda(t_ray *ray)
     }
 }
 
-// void add_pixels_col_to_img(t_cub3d *data, int pixel_x, double wall_dist)
-// {
-//     int line_height;
-//     int pixel_y;
-
-//     line_height = (int)(SCREEN_HEIGHT / wall_dist);
-//     pixel_y = (SCREEN_HEIGHT - line_height) / 2;
-
-//     while (pixel_y < (SCREEN_HEIGHT + line_height) / 2)
-//     {
-//         mlx_pixel_put(data->mlx, data->mlx_win, pixel_x, pixel_y, 0xFFFFFF);
-//         pixel_y++;
-//     }
-// }
-
 int color_to_display(char wall_orientation)
 {
     if (wall_orientation == 'N')
-        return (0xFF0000);  // Red
+        return 0xFF0000; // Red
     else if (wall_orientation == 'S')
-        return (0x00FF00);  // Green
+        return 0x00FF00; // Green
     else if (wall_orientation == 'E')
-        return (0xFF0000);  // Red
-    return (0x00FF00);  // Green
+        return 0x0000FF; // Blue
+    return 0xFFFF00; // Yellow
 }
 
 void add_pixels_col_to_img(t_cub3d *data, const int pixel_x, const t_dda *wall_config)
@@ -350,15 +335,15 @@ int modif_player(int key, t_cub3d *data)
 void init_player(t_cub3d const *data, t_player *player)
 {
     (void)data;
-    player->pos.x = 1.1;// a la position 1 on voit au travers du mur
+    player->pos.x = 1.1; // a la position 1 on voit au travers du mur
     player->pos.y = 1.1;
-    
+
     player->relative_dir_angle = to_rad(45);
     player->dir.x = cos(player->relative_dir_angle);
     player->dir.y = sin(player->relative_dir_angle);
     player->movement.x = player->dir.x * PLAYER_STEP_SIZE;
     player->movement.y = player->dir.y * PLAYER_STEP_SIZE;
-    
+
     player->plane.x = -player->dir.y * PLANE_FOV;
     player->plane.y = player->dir.x * PLANE_FOV;
 }
@@ -391,7 +376,7 @@ int main()
     data.mlx_win = mlx_new_window(data.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Raycaster");
     init_player(&data, &(data.player));
     init_grid(&(data.grid));
-    memset(&data.ray, 0, sizeof(t_ray));
+    // memset(&data.ray, 0, sizeof(t_ray));
     create_raycast_img(&data);
     mlx_hook(data.mlx_win, 2, 1L << 0, modif_player, &data);
     mlx_loop(data.mlx);

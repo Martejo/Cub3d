@@ -4,7 +4,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror -g3
 
-SRCS = main.c
+SRCS = main2.c
 
 PATH_MLX = ../../minilibx-linux
 PATH_LFT = ../../libft
@@ -20,14 +20,14 @@ $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
 
 clean:
-	@rm -rf objs
+	@rm -rf $(OBJS)
 	@make clean -C $(PATH_MLX)
 	@make clean -C $(PATH_LFT)
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(PATH_MLX)
 	@make fclean -C $(PATH_LFT)
+# @make fclean -C $(PATH_MLX)
 
 re: fclean all
 
