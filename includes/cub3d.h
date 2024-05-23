@@ -14,8 +14,8 @@
 /*
 ** Define size window
 */
-# define SCREEN_HEIGHT 600
-# define SCREEN_WIDTH 800
+# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 1920
 # define TEXT_WIDTH 64 
 # define TEXT_HEIGHT 64
 # define MAX_HEIGHT 1000
@@ -53,12 +53,12 @@
 **Game Macro Definition
 */
 #define PI 3.1415926535
-#define FOV 110
+#define FOV 66
 #define FOV_RAD (FOV * PI / 180)
 #define PLANE_FOV tan(FOV_RAD / 2)
 // #define SCREEN_WIDTH 1300
 // #define SCREEN_HEIGHT 400
-#define PLAYER_STEP_SIZE 0.1
+#define PLAYER_STEP_SIZE 0.3
 
 /*
 **Enum Definition
@@ -165,7 +165,7 @@ typedef struct s_image
 	void	*img_ptr;
 	char	*addr;
 	int		bpp;
-	int		line_length;
+	int		line_len;
 	int		endian;
 }	t_image;
 
@@ -230,7 +230,7 @@ bool	is_char_adjacent_to_space(char **map, int x, int y);
 
 
 /***Parsing_texture***/
-void	extract_texture_path(char ***texture, const char *line, int index_text);
+void	extract_texture_path(char ***texture, char *line, int index_text);
 int		get_texture_index_from_line(char *line);
 
 /***Parsing file***/
@@ -250,6 +250,13 @@ void	config_player(t_player* player);
 
 /**Game_loop**/
 void	game_loop(t_cub3d *data);
+void create_raycast_img(t_cub3d *data);
+void	put_pixel(t_image *img, int col, int line, int color);
+
+
+void	init_player(t_grid *grid, t_player *player);
+
+
 int		modif_player(int key, t_cub3d *data);
 
 bool	is_player(char c);

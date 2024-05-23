@@ -68,10 +68,10 @@ SRCS =	srcs/main.c \
 
 
 INC = /includes/cub3d.h
-
+# attention les modifs sur le .h et sur le Makefile ne recompilent pas !
 OBJS = $(SRCS:.c=.o)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	make -C libft/
 	make -C minilibx-linux/
 	$(CC) $(FLAGS) $(OBJS) -I $(INC) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx

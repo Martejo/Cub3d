@@ -6,7 +6,7 @@
 /*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:03:27 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 13:57:28 by hanglade         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:43:34 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	main(int argc, char **argv)
 	process_config_and_map(data, argv[1]);
 	init_mlx(&data->mlx);
 	init_image(data);
-	init_sprites(data);
+	// init_sprites(data);
 	//hugo
 	// config_grid(&data->grid);//geof l' a deja fait
-	init_player(&data->player);
+	init_player(&data->grid, &data->player);
 	game_loop(data);
 	print_texture_debug(data->text_path, data->colors);
 	print_map_debug(&data->grid);

@@ -30,24 +30,25 @@ static t_dvector get_player_pos(const t_grid *grid)
 		i++;
 	}
 }
-static void	adjust_player_pos_to_near_walls(char **grid_pos, t_player *player)
+
+static void	adjust_player_pos_to_near_walls(char **grid_c, t_player *player)
 {
 	//si le player est coll'e au mur, le mur ne sera pas affiche
-	if (grid_pos[0][-1])
-		player->pos.y += 0.1;
-	else if (grid_pos[0][1])
-		player->pos.y -= 0.1;
-	if (grid_pos[-1][0])
-		player->pos.y += 0.1;
-	else if (grid_pos[1][0])
-		player->pos.y -= 0.1;
+	if (grid_c[(int)player->pos.y - 1][(int)player->pos.x])
+		player->pos.y += 0.5;
+	else if (grid_c[(int)player->pos.y + 1][(int)player->pos.x])
+		player->pos.y -= 0.5;
+	if (grid_c[(int)player->pos.y][(int)player->pos.x - 1])
+		player->pos.x += 0.5;
+	else if (grid_c[(int)player->pos.y][(int)player->pos.x + 1])
+		player->pos.x -= 0.5;
 }
 
 void	init_player(t_grid *grid, t_player *player)
 {
 	player->pos = get_player_pos(grid);
 	player->dir_angle = get_player_dir_relative_angle(grid->content[(int)player->pos.y][(int)player->pos.x]);
-	adjust_player_pos_to_near_walls((char **)&grid->content[(int)player->pos.y][(int)player->pos.x], player);
+	adjust_player_pos_to_near_walls(grid->content, player);
 	process_player_dir(player);
     process_player_plane(player);
     process_player_movement(player);

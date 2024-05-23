@@ -2,7 +2,7 @@
 
 static bool is_wall_detected(const t_grid *grid, const t_ray *ray)
 {
-    return (grid->content[ray->grid_pos.y][ray->grid_pos.x] == 1);
+    return (grid->content[ray->grid_pos.y][ray->grid_pos.x] == '1');
 }
 
 static double process_wall_dist(char last_side_tested, const t_ray *ray)

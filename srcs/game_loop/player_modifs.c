@@ -10,7 +10,7 @@ static bool is_valid_move(t_grid *grid, double new_x, double new_y)
         return false; // Out of bounds
     }
 
-    if (grid->content[grid_y][grid_x] == 1)
+    if (grid->content[grid_y][grid_x] == '1')
     {
         return false; // Collision with wall
     }
@@ -79,6 +79,8 @@ int	modif_player(int key, t_cub3d *data)
         modif_player_pos(key, &(data->player), &(data->grid));
     if (key == XK_Left || key == XK_Right)
         modif_player_dir(key, &(data->player));
+    //printf("posx = %f posy = %f angle = %f\n", data->player.pos.x, data->player.pos.y, data->player.dir_angle);//
+   // fflush(stdout);//
     create_raycast_img(data);
 	return (0);
 }

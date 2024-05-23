@@ -1,5 +1,14 @@
 #include "../../includes/cub3d.h"
 
+void	put_pixel(t_image *img, int col, int line, int color)
+{
+	int	offset;
+
+	offset = (img->line_len * line) + (img->bpp * col / 8);
+	if (col >= 0 && col < SCREEN_WIDTH && line >= 0 && line < SCREEN_HEIGHT)
+		*((int *)(img->addr + offset)) = color;
+}
+
 static int color_to_display(char wall_orientation)
 {
     if (wall_orientation == 'N')
@@ -23,7 +32,7 @@ void add_pixels_col_to_img(t_cub3d *data, const int pixel_x, const t_dda *wall_c
 
     while (pixel_y < (SCREEN_HEIGHT + displayed_height) / 2)
     {
-        mlx_pixel_put(data->mlx.mlx_ptr, data->mlx.win_ptr, pixel_x, pixel_y, color);
+        put_pixel(&data->framebuffer, pixel_x, pixel_y, color);
         pixel_y++;
     }
 }
