@@ -4,7 +4,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror -g3
 
-SRCS = main2.c
+SRCS = main.c
 
 PATH_MLX = ../../minilibx-linux
 PATH_LFT = ../../libft
@@ -18,6 +18,8 @@ $(NAME): $(OBJS)
 
 %.o: %.c $(INC)
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
+
+all : $(NAME)
 
 clean:
 	@rm -rf $(OBJS)
