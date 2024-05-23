@@ -1,4 +1,4 @@
-NAME = jo.exe
+NAME = raycast_improved.exe
 
 CC = gcc
 
@@ -19,15 +19,17 @@ $(NAME): $(OBJS)
 %.o: %.c $(INC)
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
 
+all : $(NAME)
+
 clean:
-	@rm -rf objs
+	@rm -rf $(OBJS)
 	@make clean -C $(PATH_MLX)
 	@make clean -C $(PATH_LFT)
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(PATH_MLX)
 	@make fclean -C $(PATH_LFT)
+# @make fclean -C $(PATH_MLX)
 
 re: fclean all
 
