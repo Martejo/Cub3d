@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:57:42 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 15:49:32 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:24:04 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ static bool	is_int_overflow(char *str_nbr)
 	return (false);
 }
 
+void	check_format_color(char *line, int start)
+{
+	int	i;
+	int	nbr_comma;
+
+	nbr_comma = 0;
+	i = start;
+	while (line[i])
+	{
+		if (line[i] != ',' && !ft_isdigit(line[i]))
+			free_and_exit_error(COLOR_FORMAT_ERROR);
+		else if (line[i] == ',')
+			nbr_comma++;
+		i++;
+	}
+	if (nbr_comma != 2)
+		free_and_exit_error(COLOR_FORMAT_ERROR);
+}
+
 void	extract_color(t_colors *colors, char *line, int index_color)
 {
 	int		i;
@@ -56,6 +75,7 @@ void	extract_color(t_colors *colors, char *line, int index_color)
 	int		rgb[3];
 
 	i = index_code_color(line);
+	check_format_color(line, i);
 	color = split_gc(&line[i], ',', TMP);
 	if (!color)
 		free_and_exit_error(MALLOC_ERR_MSG);
