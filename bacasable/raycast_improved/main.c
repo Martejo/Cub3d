@@ -337,8 +337,8 @@ int modif_player(int key, t_cub3d *data)
 void init_player(t_cub3d const *data, t_player *player)
 {
     (void)data;
-    player->pos.x = 1.1; // a la position 1 on voit au travers du mur
-    player->pos.y = 1.1;
+    player->pos.x = 1; // a la position 1 on voit au travers du mur
+    player->pos.y = 1;
 
     player->relative_dir_angle = to_rad(45);
     player->dir.x = cos(player->relative_dir_angle);

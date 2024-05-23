@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:07:34 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 10:42:54 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:47:17 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	has_xpm_extension(const char *path)
 	return (0);
 }
 
-void	extract_texture_path(char ***texture, const char *line, int index_text)
+void	extract_texture_path(char ***texture, char *line, int index_text)
 {
 	int		i;
 	char	*path;

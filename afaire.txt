@@ -1,0 +1,10 @@
+erreur color (split des virgules)
+les murs (1) doivent ils ^etre sur les angles de la map ?
+limiter la taille de la grille a 1000/1000
+
+Si une ligne est sautee et separe la grille en deux cela ne devrait pas fonctionner
+le floor et ceil sont directement dessinnes sur l' image (vu que leur position ne changera jamais on peut parametrer une image par defaut (fluidifier) qui contient ces infos, on aura juste a memcpy cette struct apres)
+
+Si le player est colle a un mur, le decaler legeremment sur x ou y en fonction de si le mur est `a droite `a gauche en haut ou en bas.
+
+eviter l' effet un pas par un pas grace aux gestionnaires d' evennements (voir comment robin a fait) 2 touches `a la fois. 

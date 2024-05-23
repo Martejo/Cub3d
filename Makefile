@@ -53,16 +53,25 @@ SRCS =	srcs/main.c \
 		srcs/parsing/map_parsing.c \
 		srcs/parsing/map_utils_parsing.c \
 		srcs/parsing/texture_parsing.c \
+		\
+		srcs/game_loop/game_loop.c \
+		srcs/game_loop/dda_ray_config.c \
+		srcs/game_loop/dda_wall_config.c \
+		srcs/game_loop/img_addpixels.c \
+		srcs/game_loop/player_init.c \
+		srcs/game_loop/player_modifs.c \
+		srcs/game_loop/player_utils.c \
+		\
 		srcs/debug/print_debug.c \
 
 
 
 
 INC = /includes/cub3d.h
-
+# attention les modifs sur le .h et sur le Makefile ne recompilent pas !
 OBJS = $(SRCS:.c=.o)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	make -C libft/
 	make -C minilibx-linux/
 	$(CC) $(FLAGS) $(OBJS) -I $(INC) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
