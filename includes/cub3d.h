@@ -18,6 +18,8 @@
 # define SCREEN_WIDTH 800
 # define TEXT_WIDTH 64 
 # define TEXT_HEIGHT 64
+# define MAX_HEIGHT 1000
+# define MAX_WIDHT 1000
 
 /*
 **Color Definition**
@@ -37,7 +39,7 @@
 
 # define E_NB_ARGS "Invalid nuber of arguments: usage: <exe> <map_file>\n"
 # define FILE_EXTENSION "Error\nWrong file extension. Cub3d need <*.cub>\n"
-# define FILE_PATH "Error\nCannot open map file.\n"
+# define FILE_PATH "Error\nCannot open file.\n"
 # define SYNTAX_LINE "Error\nInvalid syntax in configuration.\n"
 # define TEXT_PATH "Error\nInvalid path for texture.\n"
 # define COLOR_FORMAT_ERROR "Error\nInvalid color format.\n"
@@ -46,7 +48,7 @@
 # define EMPTY_START "Error\nNo starting position in map.\n"
 # define MULT_START "Error\nMultiple starting positions in map.\n"
 # define MALLOC_ERR_MSG "Malloc error\n"
-
+# define SIZE_ERROR_GRID "Error\nMax size grid -> 100*100\n"
 /*
 **Game Macro Definition
 */
@@ -217,11 +219,12 @@ void	init_sprites(t_cub3d *data);
 void	process_config_and_map(t_cub3d *data, char *file);
 
 /***Parsing_map***/
-char	**extract_map(char **map);
+void	extract_grid(t_grid *grid, char **grid_in_file);
 
 /***Parsing map utils***/
 bool	is_space_line(char *str);
-int		get_size_map(char **map);
+int		get_height_grid(char **grid);
+int		get_max_width_grid(char **grid);
 bool	is_char_adjacent_to_space(char **map, int x, int y);
 
 

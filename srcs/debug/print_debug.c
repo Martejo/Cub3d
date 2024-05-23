@@ -6,7 +6,7 @@
 /*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:00:13 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 13:56:37 by hanglade         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:41:29 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ void	print_texture_debug(char **text, t_colors colors)
 	printf("C = %d\n", colors.ceiling_color);
 }
 
-void	print_map_debug(t_grid *map)
+void	print_map_debug(t_grid *grid)
 {
 	int	i;
 
 	i = 0;
-	while (map->content[i])
+	printf("height = %d\nmax_width = %d\n", grid->height, grid->width);
+	while (grid->content[i])
 	{
-		printf("%s\n", map->content[i]);
+		printf("%s\n", grid->content[i]);
 		i++;
 	}
 }

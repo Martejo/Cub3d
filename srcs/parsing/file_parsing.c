@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:58:10 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 16:11:48 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:42:28 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	test_and_open_file(char *file)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		free_and_exit_error(FILE_PATH);
 	close(fd);
 }
