@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:56:55 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 15:49:52 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:14:31 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,22 @@ static bool	extrem_lines_are_valid(char *line)
 	return (true);
 }
 
-static bool	is_map_enclosed_by_walls(char **map)
+static bool	is_map_enclosed_by_walls(char **grid, int height)
 {
 	unsigned int	x;
 	unsigned int	y;
-	int				size;
 
-	size = get_size_map(map);
 	x = 0;
 	y = 1;
-	while (map[y] && y < size)
+	while (grid[y] && y < height)
 	{
-		while (map[y][x])
+		while (grid[y][x])
 		{
-			if ((x == 0 && map[y][x] != '1'
-				&& map[y][x] != ' ')
-				|| is_space_line(map[y]))
+			if ((x == 0 && grid[y][x] != '1'
+				&& grid[y][x] != ' ')
+				|| is_space_line(grid[y]))
 				return (false);
-			if (is_char_adjacent_to_space(map, x, y))
+			if (is_char_adjacent_to_space(grid, x, y))
 				return (false);
 			x++;
 		}
@@ -77,33 +75,40 @@ static bool	is_map_enclosed_by_walls(char **map)
 	return (true);
 }
 
-static bool	is_valid_map(char **map)
+static bool	is_valid_map(char **grid, int height)
 {
-	if (!extrem_lines_are_valid(map[0])
-		|| !extrem_lines_are_valid(map[get_size_map(map) - 1]))
+	if (!extrem_lines_are_valid(grid[0])
+		|| !extrem_lines_are_valid(grid[height - 1]))
 		return (false);
-	if (!is_map_enclosed_by_walls(map) || !is_map_charset_valid(map))
+	if (!is_map_enclosed_by_walls(grid, height) || !is_map_charset_valid(grid))
 		return (false);
 	return (true);
 }
 
-char	**extract_map(char **map)
+void	extract_grid(t_grid *grid, char **grid_in_file)
 {
 	char	**ret_map;
 	int		i;
+	int		height;
 
-	if (is_valid_map(map))
+	height = get_height_grid(grid_in_file);
+	if (is_valid_map(grid_in_file, height))
 	{
-		ret_map = calloc_gc(get_size_map(map) + 1, sizeof(char **), GRID);
-		i = 0;
-		while (map[i])
+		ret_map = calloc_gc(height + 1, sizeof(char **), GRID);
+		if (!ret_map)
+				free_and_exit_error(MALLOC_ERR_MSG);
+		i = -1;
+		while (grid_in_file[++i])
 		{
-			ret_map[i] = strdup_gc(map[i], GRID);
-			i++;
+			ret_map[i] = strdup_gc(grid_in_file[i], GRID);
+			if (!ret_map[i])
+				free_and_exit_error(MALLOC_ERR_MSG);
 		}
 		ret_map[i] = NULL;
 	}
 	else
 		free_and_exit_error(MAP_ERROR);
-	return (ret_map);
+	grid->height = height;
+	grid->width = get_max_width_grid(ret_map);
+	grid->content = ret_map;
 }

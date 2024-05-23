@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:58:40 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:59:00 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:31:20 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,40 @@ bool	is_space_line(char *str)
 	return (all_line_char_are_spaces);
 }
 
-int	get_size_map(char **map)
+int	get_height_grid(char **grid)
 {
 	int	i;
 
 	i = 0;
-	while (map[i])
+	while (grid[i])
 		i++;
+	if (i > MAX_HEIGHT)
+		free_and_exit_error(SIZE_ERROR_GRID);
 	return (i);
+}
+
+
+int	get_max_width_grid(char **grid)
+{
+	int	i;
+	int	width;
+	int	tmp;
+
+	i = 0;
+	width = 0;
+	while (grid[i])
+	{
+		tmp = ft_strlen(grid[i]) - 1;
+		while (ft_isspace(grid[i][tmp]))
+			tmp--;
+		if (tmp > width)
+			width = tmp;
+		i++;
+	}
+	if (width > MAX_WIDHT)
+		free_and_exit_error(SIZE_ERROR_GRID);
+	return (width);
+	
 }
 
 bool	is_char_adjacent_to_space(char **map, int x, int y)

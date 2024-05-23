@@ -4,7 +4,7 @@ void	init_image(t_cub3d *data)
 {
 	data->framebuffer.img_ptr = mlx_new_image(data->mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!data->framebuffer.img_ptr)
-		free_and_exit_error(MALLOC_ERR_MSG); // A voir changer msg
+		free_and_exit_error("que\n"); // A voir changer msg
 	data->framebuffer.addr = mlx_get_data_addr(data->framebuffer.img_ptr, &data->framebuffer.bpp, &data->framebuffer.line_length, &data->framebuffer.endian);
 
 	/*

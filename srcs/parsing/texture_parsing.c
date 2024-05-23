@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:07:34 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 16:03:57 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:42:54 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	extract_texture_path(char ***texture, const char *line, int index_text)
 	if (i == -1)
 		free_and_exit_error(TEXT_PATH);
 	has_xpm_extension(&line[i]);
+	test_and_open_file(&line[i]);
 	path = strdup_gc(&line[i], TEXTURE);
 	if (!path)
 		free_and_exit_error(MALLOC_ERR_MSG);

@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:56:20 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 16:03:40 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:26:37 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ void	process_config_and_map(t_cub3d *data, char *file)
 	if (!data_file)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	data->text_path = calloc_gc(4, sizeof(char **), TEXTURE);
+	if (!data->text_path)
+		free_and_exit_error(MALLOC_ERR_MSG);
 	i = parse_texture_and_color_lines(data, data_file);
-	data->grid.grid = extract_map(&data_file[i]);
+	extract_grid(&data->grid, &data_file[i]);
 	clear_garbage(TMP, free);
 }
