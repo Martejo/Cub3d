@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:57:42 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:58:02 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:49:32 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool	is_int_overflow(char *str_nbr)
 	return (false);
 }
 
-void	extract_color(t_text *texture, char *line, int index_color)
+void	extract_color(t_colors *colors, char *line, int index_color)
 {
 	int		i;
 	char	**color;
@@ -69,7 +69,7 @@ void	extract_color(t_text *texture, char *line, int index_color)
 			free_and_exit_error(COLOR_FORMAT_ERROR);
 	}
 	if (index_color == 4)
-		texture->floor_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+		colors->floor_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	else
-		texture->ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+		colors->ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 }

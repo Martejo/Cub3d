@@ -6,7 +6,7 @@
 /*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:07:34 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 10:20:11 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:03:57 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	has_xpm_extension(const char *path)
 	return (0);
 }
 
-void	extract_texture_path(t_text *texture, const char *line, int index_text)
+void	extract_texture_path(char ***texture, const char *line, int index_text)
 {
 	int		i;
 	char	*path;
@@ -74,11 +74,11 @@ void	extract_texture_path(t_text *texture, const char *line, int index_text)
 	if (!path)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	if (index_text == NORTH)
-		texture->north_texture = path;
+		(*texture)[NORTH] = path;
 	else if (index_text == SOUTH)
-		texture->south_texture = path;
+		(*texture)[SOUTH] = path;
 	else if (index_text == EAST)
-		texture->east_texture = path;
+		(*texture)[EAST] = path;
 	else if (index_text == WEST)
-		texture->west_texture = path;
+		(*texture)[WEST] = path;
 }
