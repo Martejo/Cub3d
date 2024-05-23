@@ -2,6 +2,7 @@
 # define CUB3D_H
 
 #include "../minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx_int.h"
 #include "../libft/libft.h"
 #include <math.h>
 #include <fcntl.h>
@@ -46,7 +47,16 @@
 # define MULT_START "Error\nMultiple starting positions in map.\n"
 # define MALLOC_ERR_MSG "Malloc error\n"
 
-
+/*
+**Game Macro Definition
+*/
+#define PI 3.1415926535
+#define FOV 110
+#define FOV_RAD (FOV * PI / 180)
+#define PLANE_FOV tan(FOV_RAD / 2)
+// #define SCREEN_WIDTH 1300
+// #define SCREEN_HEIGHT 400
+#define PLAYER_STEP_SIZE 0.1
 
 /*
 **Enum Definition
@@ -75,10 +85,58 @@ enum e_id_gc
 **Structure Definition
 */
 
-// Structure player
+typedef struct s_fvector
+{
+    float x;
+    float y;
+} t_fvector;
 
-//Structure ray
+typedef struct s_dvector
+{
+    double x;
+    double y;
+} t_dvector;
 
+typedef struct s_ivector
+{
+    int x;
+    int y;
+} t_ivector;
+
+typedef struct s_player
+{
+    t_dvector pos;
+    double dir_angle;
+
+    t_dvector dir;
+    t_dvector plane;
+
+    t_dvector movement;
+} t_player;
+
+typedef struct t_dda
+{
+    double dist;
+    char orientation;
+} t_dda;
+
+typedef struct s_ray
+{
+    t_ivector grid_pos;
+    t_dvector true_pos;
+    t_dvector dir;
+
+    t_dvector delta_dist;
+    t_dvector side_dist;
+    t_ivector step_direction;
+} t_ray;
+
+typedef struct s_raycast
+{
+    double camera_x;
+    double perp_wall_dist;
+    t_ray ray;
+} t_raycast;
 
 typedef struct s_colors
 {
@@ -95,7 +153,7 @@ typedef struct s_vector
 
 typedef struct s_grid
 {
-	char **grid;
+	char **content;
 	int width;
 	int height;
 }	t_grid;
@@ -133,6 +191,7 @@ typedef struct s_cub3d
 {
 	t_mlx	mlx;
 	t_grid	grid;
+    t_player player;
 	char	**text_path;
 	t_texture	text_img[4];
 	t_colors colors;
@@ -181,5 +240,26 @@ void	extract_color(t_colors *colors, char *line, int index_color);
 /**Debug**/
 void	print_texture_debug(char **text, t_colors colors);
 void	print_map_debug(t_grid *map);
+
+/**Config_game**/
+void	config_grid(t_grid* grid);
+void	config_player(t_player* player);
+
+/**Game_loop**/
+void	game_loop(t_cub3d *data);
+int		modif_player(int key, t_cub3d *data);
+
+bool	is_player(char c);
+double to_rad(int degrees);
+void process_player_movement(t_player *player);
+void process_player_dir(t_player *player);
+void process_player_plane(t_player *player);
+
+void get_wall_config_dda(const t_player *player, const t_grid *grid, t_ray *ray, t_dda *wall_config);
+
+void get_ray_config_dda(t_ray *ray);
+void init_ray(const double camera_x, t_player *player, t_ray *ray); 
+
+void add_pixels_col_to_img(t_cub3d *data, const int pixel_x, const t_dda *wall_config);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:03:27 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 16:28:19 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:57:28 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int	main(int argc, char **argv)
 	init_mlx(&data->mlx);
 	init_image(data);
 	init_sprites(data);
+	//hugo
+	// config_grid(&data->grid);//geof l' a deja fait
+	init_player(&data->player);
+	game_loop(data);
 	print_texture_debug(data->text_path, data->colors);
 	print_map_debug(&data->grid);
 	close_programm(data, "test", 1);

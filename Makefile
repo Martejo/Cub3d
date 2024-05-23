@@ -53,6 +53,15 @@ SRCS =	srcs/main.c \
 		srcs/parsing/map_parsing.c \
 		srcs/parsing/map_utils_parsing.c \
 		srcs/parsing/texture_parsing.c \
+		\
+		srcs/game_loop/game_loop.c \
+		srcs/game_loop/dda_ray_config.c \
+		srcs/game_loop/dda_wall_config.c \
+		srcs/game_loop/img_addpixels.c \
+		srcs/game_loop/player_init.c \
+		srcs/game_loop/player_modifs.c \
+		srcs/game_loop/player_utils.c \
+		\
 		srcs/debug/print_debug.c \
 
 

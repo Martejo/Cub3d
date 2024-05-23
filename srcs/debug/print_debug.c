@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:00:13 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 15:53:52 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:56:37 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	print_map_debug(t_grid *map)
 	int	i;
 
 	i = 0;
-	while (map->grid[i])
+	while (map->content[i])
 	{
-		printf("%s\n", map->grid[i]);
+		printf("%s\n", map->content[i]);
 		i++;
 	}
 }
