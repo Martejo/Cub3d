@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   file_parsing.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:58:10 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 10:42:28 by gemartel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
 
 void	test_and_open_file(char *file)
@@ -22,7 +10,6 @@ void	test_and_open_file(char *file)
 	close(fd);
 }
 
-//A voir si rajouter gestion d'erreur pour read
 static int	get_size_file(char *file)
 {
 	int		size;
@@ -46,11 +33,9 @@ static char	*file_to_str(char *file)
 	char	c;
 	int		fd;
 	int		i;
+	int		size;
 
-	int	size = 0;
-	
 	size = get_size_file(file);
-	printf("size file = %d\n", size);
 	file_data = (char *) calloc_gc(size + 1, sizeof(char), TMP);
 	if (!file_data)
 		free_and_exit_error(MALLOC_ERR_MSG);

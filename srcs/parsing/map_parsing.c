@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_parsing.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:56:55 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 11:14:31 by gemartel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
 
 static bool	is_map_charset_valid(char **map)
@@ -96,7 +84,7 @@ void	extract_grid(t_grid *grid, char **grid_in_file)
 	{
 		ret_map = calloc_gc(height + 1, sizeof(char **), GRID);
 		if (!ret_map)
-				free_and_exit_error(MALLOC_ERR_MSG);
+			free_and_exit_error(MALLOC_ERR_MSG);
 		i = -1;
 		while (grid_in_file[++i])
 		{

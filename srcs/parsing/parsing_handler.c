@@ -1,19 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_handler.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:56:20 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 14:42:40 by hanglade         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
-
-//// Rajouter fonction struct player avec postion et caractere a extraire
-///	extract_data_player direction + pos
 
 int	is_empty_line(char *line)
 {

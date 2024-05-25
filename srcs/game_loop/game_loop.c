@@ -1,57 +1,40 @@
 #include "../../includes/cub3d.h"
 
-void    draw_floor_ceil(t_cub3d *data, t_image *img)
+void	create_raycast_img(t_cub3d *data)
 {
-    int i;
-    int j;
+	t_ray		ray;
+	t_player	*player;
+	t_dda		wall_ray;
+	double		camera_x;
+	int			x;
 
-    i = 0;
-    while(i < SCREEN_HEIGHT / 2)
-    {
-        j = 0;
-        while ( j < SCREEN_WIDTH)
-        {
-            put_pixel(img, j, i, data->colors.ceiling_color);
-            j++;
-        }
-        i++;
-    }
-
-    while(i < SCREEN_HEIGHT)
-    {
-        j = 0;
-        while ( j < SCREEN_WIDTH)
-        {
-            put_pixel(img, j, i, data->colors.floor_color);
-            j++;
-        }
-        i++;
-    }
+	x = 0;
+	player = &(data->player);
+	draw_floor_ceil(data, &data->framebuffer);
+	while (x < SCREEN_WIDTH)
+	{
+		camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+		init_ray(camera_x, player, &ray);
+		get_ray_config_dda(&ray);
+		get_wall_config_dda(&(data->grid), &ray, &wall_ray);
+		add_pixels_col_to_img_txt(data, x, &wall_ray, &ray);
+		x++;
+	}
+	mlx_put_image_to_window(data->mlx.mlx_ptr,
+		data->mlx.win_ptr, data->framebuffer.img_ptr, 0, 0);
 }
 
-
-void create_raycast_img(t_cub3d *data)
+int	game_loop(t_cub3d *data)
 {
-    t_ray ray;
-    t_player *player = &(data->player);
-    t_dda wall_ray;
-    double camera_x;
-
-    draw_floor_ceil(data, &data->framebuffer);
-    for (int x = 0; x < SCREEN_WIDTH; x++)
-    {
-        camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-        init_ray(camera_x, player, &ray);
-        get_ray_config_dda(&ray);
-        get_wall_config_dda(&(data->player), &(data->grid), &ray, &wall_ray);
-        add_pixels_col_to_img(data, x, &wall_ray);
-    }
-    mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr, data->framebuffer.img_ptr, 0, 0);
-}
-
-void game_loop(t_cub3d *data)
-{
+	modif_player(data);
 	create_raycast_img(data);
-    mlx_hook(data->mlx.win_ptr, 2, 1L << 0, modif_player, data);
-    mlx_loop(data->mlx.mlx_ptr);
+}
+
+void	game_event_loop(t_cub3d *data)
+{
+	mlx_hook(data->mlx.win_ptr, 17, 0L, exit_button, data);
+	mlx_hook(data->mlx.win_ptr, 02, 1L << 0, key_press_hook, data);
+	mlx_hook(data->mlx.win_ptr, 03, 1L << 1, key_release_hook, data);
+	mlx_loop_hook(data->mlx.mlx_ptr, game_loop, (void *)data);
+	mlx_loop(data->mlx.mlx_ptr);
 }
