@@ -31,37 +31,37 @@ static bool	try_move(t_grid *grid, t_dvector *pos, double dx, double dy)
 
 static void	modif_player_pos(t_key_handl key, t_player *player, t_grid *grid) //lines
 {
-	t_dvector	delta;
+	t_dvector	tested_move;
 	t_dvector	new;
 
 	new.x = player->pos.x;
 	new.y = player->pos.y;
-	delta.x = 0;
-	delta.y = 0;
+	tested_move.x = 0;
+	tested_move.y = 0;
 	if (key.key_w == 1)
 	{
-		delta.x = player->movement.x;
-		delta.y = player->movement.y;
+		tested_move.x = player->movement.x;
+		tested_move.y = player->movement.y;
 	}
 	else if (key.key_s == 1)
 	{
-		delta.x = -player->movement.x;
-		delta.y = -player->movement.y;
+		tested_move.x = -player->movement.x;
+		tested_move.y = -player->movement.y;
 	}
 	else if (key.key_a == 1)
 	{
-		delta.x = player->movement.y;
-		delta.y = -player->movement.x;
+		tested_move.x = player->movement.y;
+		tested_move.y = -player->movement.x;
 	}
 	else if (key.key_d == 1)
 	{
-		delta.x = -player->movement.y;
-		delta.y = player->movement.x;
+		tested_move.x = -player->movement.y;
+		tested_move.y = player->movement.x;
 	}
-	if (!try_move(grid, &new, delta.x, delta.y))
+	if (!try_move(grid, &new, tested_move.x, tested_move.y))
 	{
-		if (!try_move(grid, &new, delta.x, 0))
-			try_move(grid, &new, 0, delta.y);
+		if (!try_move(grid, &new, tested_move.x, 0))
+			try_move(grid, &new, 0, tested_move.y);
 	}
 	player->pos.x = new.x;
 	player->pos.y = new.y;
