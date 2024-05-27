@@ -14,21 +14,28 @@ static double	get_player_dir_relative_angle(char orientation)
 
 static t_dvector	get_player_pos(const t_grid *grid)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
+	t_dvector	pos;
+	bool	flag;
 
 	i = 0;
-	while (grid->content[i])
+	flag = false;
+	while (!flag && grid->content[i])
 	{
 		j = 0;
-		while (grid->content[i][j])
+		while (!flag && grid->content[i][j])
 		{
 			if (is_player(grid->content[i][j]))
-				return ((t_dvector){.x = j, .y = i});
+			{
+				pos = (t_dvector){.x = j, .y = i};
+				flag = true;
+			}
 			j++;
 		}
 		i++;
 	}
+	return (pos);
 }
 
 static void	adjust_player_pos_to_near_walls(char **grid_c, t_player *player)

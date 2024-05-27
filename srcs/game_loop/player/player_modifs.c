@@ -1,17 +1,17 @@
 #include "../../../includes/cub3d.h"
 
-static bool	try_move(t_grid *grid, t_vector *pos, double dx, double dy)
+static bool	try_move(t_grid *grid, t_dvector *pos, double dx, double dy)
 {
-	t_vector	new;
+	t_dvector	new;
 	t_ivector	grid_pos;
 	t_ivector	grid_pos2;
 
 	new.x = pos->x + dx;
 	new.y = pos->y + dy;
-	grid_pos.x = (int)(new.x + 0.25);
-	grid_pos2.x = (int)(new.x - 0.25);
-	grid_pos.y = (int)(new.y + 0.25);
-	grid_pos2.y = (int)(new.y - 0.25);
+	grid_pos.x = (int)(new.x + 0.3);
+	grid_pos2.x = (int)(new.x - 0.3);
+	grid_pos.y = (int)(new.y + 0.3);
+	grid_pos2.y = (int)(new.y - 0.3);
 	if (grid_pos.x < 0 || grid_pos.x >= grid->width || grid_pos.y < 0
 		|| grid_pos.y >= grid->height || grid_pos2.x < 0
 		|| grid_pos2.x >= grid->width || grid_pos2.y < 0
@@ -29,10 +29,10 @@ static bool	try_move(t_grid *grid, t_vector *pos, double dx, double dy)
 	return (false);
 }
 
-static void	modif_player_pos(t_key_handl key, t_player *player, t_grid *grid)
+static void	modif_player_pos(t_key_handl key, t_player *player, t_grid *grid) //lines
 {
-	t_vector	delta;
-	t_vector	new;
+	t_dvector	delta;
+	t_dvector	new;
 
 	new.x = player->pos.x;
 	new.y = player->pos.y;
@@ -71,13 +71,13 @@ static void	modif_player_dir(t_key_handl key, t_player *player)
 {
 	if (key.key_left == 1)
 	{
-		player->dir_angle -= 0.020;
+		player->dir_angle -= PLAYER_ROT_SPEED;
 		if (player->dir_angle < 0)
 			player->dir_angle += 2 * PI;
 	}
 	if (key.key_right == 1)
 	{
-		player->dir_angle += 0.020;
+		player->dir_angle += PLAYER_ROT_SPEED;
 		if (player->dir_angle > 2 * PI)
 			player->dir_angle -= 2 * PI;
 	}

@@ -38,7 +38,7 @@ static bool	extrem_lines_are_valid(char *line)
 	return (true);
 }
 
-static bool	is_map_enclosed_by_walls(char **grid, int height)
+static bool	is_map_enclosed_by_walls(char **grid, unsigned int height)
 {
 	unsigned int	x;
 	unsigned int	y;

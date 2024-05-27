@@ -30,7 +30,7 @@ static int	get_size_file(char *file)
 static char	*file_to_str(char *file)
 {
 	char	*file_data;
-	char	c;
+	// char	c;
 	int		fd;
 	int		i;
 	int		size;

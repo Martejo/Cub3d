@@ -1,42 +1,10 @@
-# NAME = cub3d
-
-# CC = gcc
-
-# FLAGS = -Wall -Wextra -Werror -g3
-
-# SRCS = 	main.c\
-
-# INC = cub3d.h
-
-# OBJS = $(patsubst srcs/%.c,objs/%.o,$(SRCS))
-
-# $(NAME) : $(OBJS)
-# 	make -C libft/
-# 	make -C minilibx-linux/
-# 	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
-
-# objs/%.o : %.c $(INC)
-# 	mkdir -p $(dir $@)
-# 	$(CC) $(FLAGS) -I includes/ -c $< -o $@
-
-# all : $(NAME)
-
-# clean :
-# 	rm -rf objs/
-# 	@make clean -C libft/ 
-
-# fclean : clean
-# 	rm -f $(NAME)
-# 	@make fclean -C libft
-
-# re : fclean all
-
-# test : re
-# 	./cub3d
-
-# .PHONY : clean fclean re all test
-
 NAME = cub3d
+
+all: force $(NAME)
+
+NAME_LARGE = cub3d_large
+
+NAME_SLOW = cub3d_slow
 
 CC = gcc
 
@@ -69,36 +37,44 @@ SRCS =	srcs/main.c \
 		\
 		srcs/debug/print_debug.c \
 
-INC = /includes/cub3d.h
-# attention les modifs sur le .h et sur le Makefile ne recompilent pas !
+INC = includes/cub3d.h 
+
 OBJS = $(SRCS:.c=.o)
 
-$(NAME): $(OBJS) 
-	make -C libft/
-	make -C minilibx-linux/
-	$(CC) $(FLAGS) $(OBJS) -I $(INC) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) -I ./includes -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
 
-%.o: %.c $(INC)
+%.o: %.c $(INC) Makefile
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
 
-all: $(NAME)
 
 clean:
 	@$(RM) $(OBJS)
 	@make clean -C libft/
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(NAME_LARGE) $(NAME_SLOW)
 	@make fclean -C libft
 
 re: fclean all
 
-test: re
-	./cub3d
 
-# bacasable1 : re
-# 	$(CC) $(FLAGS) $(OBJS) -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o bs1 -lX11 -lXext -lm -lmlx
-# 	@make fclean
+large : $(NAME_LARGE)
 
+force : 
+	make -C libft/
+	make -C minilibx-linux/
 
-.PHONY: clean fclean re all test
+show : all large
+	@echo "Show little map with slow moves and bricks textures\n"
+	@./cub3d ./maps/basic_bricks.cub
+	@echo "\nShow big map with fast moves and rubikscube textures\n"
+	@./cub3d_large ./maps/rubiksE.cub
+	@make fclean
+
+$(NAME_LARGE) : $(OBJS)
+	make -C libft/
+	make -C minilibx-linux/
+	$(CC) -D FOV=100 -D SCREEN_WIDTH=1400  -D SCREEN_HEIGHT=600 -D PLAYER_STEP_SIZE=0.08 -D PLAYER_ROT_SPEED=0.04 $(FLAGS) $(SRCS) -I ./includes -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME_LARGE) -lX11 -lXext -lm -lmlx
+
+.PHONY: clean fclean re all large show

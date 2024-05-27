@@ -33,20 +33,20 @@ void	draw_floor_ceil(t_cub3d *data, t_image *img)
 	}
 }
 
-static int	get_texture_x(t_ray *ray, t_dda *wall_ray, t_texture *texture)
+static int	get_texture_x(t_ray *ray, t_dda *wall, t_texture *texture)
 {
 	double	wall_hit_pos;
 	int		tex_x;
 
-	if (wall_ray->orientation == 'N' || wall_ray->orientation == 'S')
-		wall_hit_pos = ray->true_pos.x + wall_ray->dist * ray->dir.x;
+	if (wall->orientation == 'N' || wall->orientation == 'S')
+		wall_hit_pos = ray->true_pos.x + wall->dist * ray->dir.x;
 	else
-		wall_hit_pos = ray->true_pos.y + wall_ray->dist * ray->dir.y;
+		wall_hit_pos = ray->true_pos.y + wall->dist * ray->dir.y;
 	wall_hit_pos -= floor(wall_hit_pos);
 	tex_x = (int)(wall_hit_pos * (double)texture->x);
-	if ((wall_ray->orientation == 'N' && ray->dir.x > 0)
-		|| (wall_ray->orientation == 'S' && ray->dir.y < 0))
-		tex_x = texture->x - tex_x - 1;
+	// if ((wall->orientation == 'N' && ray->dir.x > 0)
+	// 	|| (wall->orientation == 'S' && ray->dir.y < 0))
+	// 	tex_x = texture->x - tex_x - 1;
 	return (tex_x);
 }
 

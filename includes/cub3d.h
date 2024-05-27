@@ -14,10 +14,17 @@
 /*
 ** Define size window
 */
-# define SCREEN_HEIGHT 800
-# define SCREEN_WIDTH 800
-# define TEXT_WIDTH 64 
-# define TEXT_HEIGHT 64
+# ifndef SCREEN_HEIGHT
+#  define SCREEN_HEIGHT 800
+# endif 
+# ifndef SCREEN_WIDTH
+#  define SCREEN_WIDTH 800
+# endif 
+
+
+/*
+** Define grid limits
+*/
 # define MAX_HEIGHT 1000
 # define MAX_WIDHT 1000
 
@@ -57,11 +64,17 @@
 **Game Macro Definition
 */
 # define PI 3.1415926535
-# define FOV 66
+# ifndef FOV
+#  define FOV 66
+# endif
 # define FOV_RAD (FOV * PI / 180)
 # define PLANE_FOV tan(FOV_RAD / 2)
-# define PLAYER_STEP_SIZE 0.050
-
+# ifndef PLAYER_STEP_SIZE
+#  define PLAYER_STEP_SIZE 0.050
+# endif
+# ifndef PLAYER_ROT_SPEED
+#  define PLAYER_ROT_SPEED 0.025
+# endif
 /*
 **Enum Definition
 */
@@ -155,12 +168,6 @@ typedef struct s_colors
 	int	floor_color;
 	int	ceiling_color;
 }	t_colors;
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-}	t_vector;
 
 typedef struct s_grid
 {
