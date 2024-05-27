@@ -1,21 +1,21 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "../minilibx-linux/mlx.h"
-#include "../minilibx-linux/mlx_int.h"
-#include "../libft/libft.h"
-#include <math.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdbool.h>
+# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
+# include "../libft/libft.h"
+# include <math.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdbool.h>
 
 /*
 ** Define size window
 */
-# define SCREEN_HEIGHT 1080
-# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 800
+# define SCREEN_WIDTH 800
 # define TEXT_WIDTH 64 
 # define TEXT_HEIGHT 64
 # define MAX_HEIGHT 1000
@@ -49,16 +49,18 @@
 # define MULT_START "Error\nMultiple starting positions in map.\n"
 # define MALLOC_ERR_MSG "Malloc error\n"
 # define SIZE_ERROR_GRID "Error\nMax size grid -> 100*100\n"
+# define MLX_IMG_ERROR "Error\nMLX image creation failed\n"
+# define MLX_PTR_ERROR "Error\nMLX pointer creation failed\n"
+# define MLX_SPRITE_ERROR "Error\nMLX xpm image creation failed\n"
+
 /*
 **Game Macro Definition
 */
-#define PI 3.1415926535
-#define FOV 66
-#define FOV_RAD (FOV * PI / 180)
-#define PLANE_FOV tan(FOV_RAD / 2)
-// #define SCREEN_WIDTH 1300
-// #define SCREEN_HEIGHT 400
-#define PLAYER_STEP_SIZE 0.3
+# define PI 3.1415926535
+# define FOV 66
+# define FOV_RAD (FOV * PI / 180)
+# define PLANE_FOV tan(FOV_RAD / 2)
+# define PLAYER_STEP_SIZE 0.050
 
 /*
 **Enum Definition
@@ -87,77 +89,84 @@ enum e_id_gc
 **Structure Definition
 */
 
+typedef struct s_key_handl
+{
+	int	key_w;
+	int	key_s;
+	int	key_a;
+	int	key_d;
+	int	key_left;
+	int	key_right;
+
+}	t_key_handl;
+
 typedef struct s_fvector
 {
-    float x;
-    float y;
-} t_fvector;
+	float	x;
+	float	y;
+}	t_fvector;
 
 typedef struct s_dvector
 {
-    double x;
-    double y;
-} t_dvector;
+	double	x;
+	double	y;
+}	t_dvector;
 
 typedef struct s_ivector
 {
-    int x;
-    int y;
-} t_ivector;
+	int	x;
+	int	y;
+}	t_ivector;
 
 typedef struct s_player
 {
-    t_dvector pos;
-    double dir_angle;
-
-    t_dvector dir;
-    t_dvector plane;
-
-    t_dvector movement;
-} t_player;
+	double		dir_angle;
+	t_dvector	pos;
+	t_dvector	dir;
+	t_dvector	plane;
+	t_dvector	movement;
+}	t_player;
 
 typedef struct t_dda
 {
-    double dist;
-    char orientation;
-} t_dda;
+	double	dist;
+	char	orientation;
+}	t_dda;
 
 typedef struct s_ray
 {
-    t_ivector grid_pos;
-    t_dvector true_pos;
-    t_dvector dir;
-
-    t_dvector delta_dist;
-    t_dvector side_dist;
-    t_ivector step_direction;
-} t_ray;
+	t_ivector	grid_pos;
+	t_ivector	step_direction;
+	t_dvector	true_pos;
+	t_dvector	dir;
+	t_dvector	delta_dist;
+	t_dvector	side_dist;
+}	t_ray;
 
 typedef struct s_raycast
 {
-    double camera_x;
-    double perp_wall_dist;
-    t_ray ray;
-} t_raycast;
+	double	camera_x;
+	double	perp_wall_dist;
+	t_ray	ray;
+}	t_raycast;
 
 typedef struct s_colors
 {
-	int floor_color;
-	int ceiling_color;
+	int	floor_color;
+	int	ceiling_color;
 }	t_colors;
 
 typedef struct s_vector
 {
-	double x;
-	double y;
-} t_vector;
-
+	double	x;
+	double	y;
+}	t_vector;
 
 typedef struct s_grid
 {
-	char **content;
-	int width;
-	int height;
+	char	**content;
+	int		width;
+	int		height;
 }	t_grid;
 
 typedef struct s_image
@@ -171,15 +180,14 @@ typedef struct s_image
 
 typedef struct s_texture
 {
-	void	*reference;      // Référence de l'image dans MiniLibX
-	unsigned char	*pixels;         // Pointeur vers les données des pixels
-	int	x;               // Largeur de l'image
-	int	y;               // Hauteur de l'image
-	int	bits_per_pixel;  // Nombre de bits par pixel
-	int	line_len;        // Longueur d'une ligne en octets
-	int	endian;          // Ordre des octets (endianness)
+	void			*reference;
+	unsigned char	*pixels;
+	int				x;
+	int				y;
+	int				bits_per_pixel;
+	int				line_len;
+	int				endian;
 }	t_texture;
-
 
 typedef struct s_mlx
 {
@@ -191,13 +199,14 @@ typedef struct s_mlx
 
 typedef struct s_cub3d
 {
-	t_mlx	mlx;
-	t_grid	grid;
-    t_player player;
-	char	**text_path;
+	t_mlx		mlx;
+	t_grid		grid;
+	t_player	player;
+	char		**text_path;
 	t_texture	text_img[4];
-	t_colors colors;
-	t_image	framebuffer;
+	t_colors	colors;
+	t_image		framebuffer;
+	t_key_handl	key;
 }	t_cub3d;
 
 /*
@@ -227,8 +236,6 @@ int		get_height_grid(char **grid);
 int		get_max_width_grid(char **grid);
 bool	is_char_adjacent_to_space(char **map, int x, int y);
 
-
-
 /***Parsing_texture***/
 void	extract_texture_path(char ***texture, char *line, int index_text);
 int		get_texture_index_from_line(char *line);
@@ -244,32 +251,33 @@ void	extract_color(t_colors *colors, char *line, int index_color);
 void	print_texture_debug(char **text, t_colors colors);
 void	print_map_debug(t_grid *map);
 
-/**Config_game**/
-void	config_grid(t_grid* grid);
-void	config_player(t_player* player);
-
 /**Game_loop**/
-void	game_loop(t_cub3d *data);
-void create_raycast_img(t_cub3d *data);
+void	create_raycast_img(t_cub3d *data);
+void	game_event_loop(t_cub3d *data);
+
+/**Controller/Key_management**/
+int		key_press_hook(int key, t_cub3d *data);
+int		key_release_hook(int key, t_cub3d *data);
+int		exit_button(t_cub3d *cub3d);
+
+/**Frame/print_frame**/
+void	draw_floor_ceil(t_cub3d *data, t_image *img);
 void	put_pixel(t_image *img, int col, int line, int color);
+void	add_pixels_col_to_img_txt(t_cub3d *data, int pixel_x,
+			t_dda *wall_config, t_ray *ray);
 
-
+/**Player**/
 void	init_player(t_grid *grid, t_player *player);
-
-
-int		modif_player(int key, t_cub3d *data);
-
+int		modif_player(t_cub3d *data);
 bool	is_player(char c);
-double to_rad(int degrees);
-void process_player_movement(t_player *player);
-void process_player_dir(t_player *player);
-void process_player_plane(t_player *player);
+double	to_rad(int degrees);
+void	process_player_movement(t_player *player);
+void	process_player_dir(t_player *player);
+void	process_player_plane(t_player *player);
 
-void get_wall_config_dda(const t_player *player, const t_grid *grid, t_ray *ray, t_dda *wall_config);
-
-void get_ray_config_dda(t_ray *ray);
-void init_ray(const double camera_x, t_player *player, t_ray *ray); 
-
-void add_pixels_col_to_img(t_cub3d *data, const int pixel_x, const t_dda *wall_config);
+/**Ray-casting/DDA**/
+void	get_ray_config_dda(t_ray *ray);
+void	init_ray(const double camera_x, t_player *player, t_ray *ray);
+void	get_wall_config_dda(const t_grid *grid, t_ray *ray, t_dda *wall_config);
 
 #endif

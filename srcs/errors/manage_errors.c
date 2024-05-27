@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   manage_errors.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:59:21 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/17 16:24:15 by gemartel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
 
 void	print_and_exit_error(char *msg)
@@ -50,8 +38,7 @@ void	close_programm(t_cub3d *cub3d, char *msg, int exit_code)
 	clear_garbage(TEXTURE, free);
 	clear_garbage(GRID, free);
 	clear_garbage(TMP, free);
-	clear_garbage(STRUCT, free);
 	clear_garbage(MLX, free);
+	clear_garbage(STRUCT, free);
 	exit(exit_code);
 }
-

@@ -1,13 +1,5 @@
 #include "../../includes/cub3d.h"
 
-void	put_pixel(t_image *img, int col, int line, int color)
-{
-	int	offset;
-
-	offset = (img->line_len * line) + (img->bpp * col / 8);
-	if (col >= 0 && col < SCREEN_WIDTH && line >= 0 && line < SCREEN_HEIGHT)
-		*((int *)(img->addr + offset)) = color;
-}
 
 static int color_to_display(char wall_orientation)
 {

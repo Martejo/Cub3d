@@ -54,18 +54,20 @@ SRCS =	srcs/main.c \
 		srcs/parsing/map_utils_parsing.c \
 		srcs/parsing/texture_parsing.c \
 		\
+		srcs/game_loop/controller/key_management.c \
+		\
+		srcs/game_loop/frame/print_frame.c \
+		\
+		srcs/game_loop/player/player_init.c \
+		srcs/game_loop/player/player_modifs.c \
+		srcs/game_loop/player/player_utils.c \
+		\
+		srcs/game_loop/ray_casting/dda_wall_config.c \
+		srcs/game_loop/ray_casting/dda_ray_config.c \
+		\
 		srcs/game_loop/game_loop.c \
-		srcs/game_loop/dda_ray_config.c \
-		srcs/game_loop/dda_wall_config.c \
-		srcs/game_loop/img_addpixels.c \
-		srcs/game_loop/player_init.c \
-		srcs/game_loop/player_modifs.c \
-		srcs/game_loop/player_utils.c \
 		\
 		srcs/debug/print_debug.c \
-
-
-
 
 INC = /includes/cub3d.h
 # attention les modifs sur le .h et sur le Makefile ne recompilent pas !
