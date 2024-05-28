@@ -44,9 +44,6 @@ static int	get_texture_x(t_ray *ray, t_dda *wall, t_texture *texture)
 		wall_hit_pos = ray->true_pos.y + wall->dist * ray->dir.y;
 	wall_hit_pos -= floor(wall_hit_pos);
 	tex_x = (int)(wall_hit_pos * (double)texture->x);
-	// if ((wall->orientation == 'N' && ray->dir.x > 0)
-	// 	|| (wall->orientation == 'S' && ray->dir.y < 0))
-	// 	tex_x = texture->x - tex_x - 1;
 	return (tex_x);
 }
 
@@ -63,30 +60,25 @@ static t_texture	*texture_to_display(t_cub3d *data, char wall_orientation)
 	return (NULL);
 }
 
-void	add_pixels_col_to_img_txt(t_cub3d *data, int pixel_x,
+void	add_pixels_col_to_img_txt(t_cub3d *data, int x,
 	t_dda *wall_config, t_ray *ray)
 {
-	t_texture	*texture;
-	int			tex_x;
-	int			displayed_height;
-	int			pixel_y_start;
-	int			pixel_y_end;
-	int			i;
-	int			tex_y;
-	int			color;
+	int				i;
+	t_texture		*texture;
+	t_pixel_column	c;
 
 	texture = texture_to_display(data, wall_config->orientation);
-	tex_x = get_texture_x(ray, wall_config, texture);
-	displayed_height = (int)(SCREEN_HEIGHT / wall_config->dist);
-	pixel_y_start = (SCREEN_HEIGHT - displayed_height) / 2;
-	pixel_y_end = pixel_y_start + displayed_height;
-	i = pixel_y_start;
-	while (i < pixel_y_end)
+	c.tex_x = get_texture_x(ray, wall_config, texture);
+	c.height = (int)(SCREEN_HEIGHT / wall_config->dist);
+	c.y_start = (SCREEN_HEIGHT - c.height) / 2;
+	c.y_end = c.y_start + c.height;
+	i = c.y_start;
+	while (i < c.y_end)
 	{
-		tex_y = ((i - pixel_y_start) * texture->y) / displayed_height;
-		color = *((int *)(texture->pixels + tex_y * texture->line_len
-					+ tex_x * (texture->bits_per_pixel / 8)));
-		put_pixel(&data->framebuffer, pixel_x, i, color);
+		c.tex_y = ((i - c.y_start) * texture->y) / c.height;
+		c.color = *((int *)(texture->pixels + c.tex_y * texture->line_len
+					+ c.tex_x * (texture->bits_per_pixel / 8)));
+		put_pixel(&data->framebuffer, x, i, c.color);
 		i++;
 	}
 }

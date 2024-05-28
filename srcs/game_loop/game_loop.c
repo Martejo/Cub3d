@@ -28,7 +28,7 @@ int	game_loop(t_cub3d *data)
 {
 	modif_player(data);
 	create_raycast_img(data);
-    return (0);
+	return (0);
 }
 
 void	game_event_loop(t_cub3d *data)

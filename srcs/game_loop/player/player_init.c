@@ -17,7 +17,7 @@ static t_dvector	get_player_pos(const t_grid *grid)
 	int			i;
 	int			j;
 	t_dvector	pos;
-	bool	flag;
+	bool		flag;
 
 	i = 0;
 	flag = false;

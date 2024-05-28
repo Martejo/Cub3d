@@ -29,53 +29,58 @@ static bool	try_move(t_grid *grid, t_dvector *pos, double dx, double dy)
 	return (false);
 }
 
-static void	modif_player_pos(t_key_handl key, t_player *player, t_grid *grid) //lines
+static void	key_manage_wasd(const t_key_handl *key, t_player *player,
+				t_dvector *move_wanted)
 {
-	t_dvector	tested_move;
+	if (key->w == 1)
+	{
+		move_wanted->x = player->movement.x;
+		move_wanted->y = player->movement.y;
+	}
+	else if (key->s == 1)
+	{
+		move_wanted->x = -player->movement.x;
+		move_wanted->y = -player->movement.y;
+	}
+	else if (key->a == 1)
+	{
+		move_wanted->x = player->movement.y;
+		move_wanted->y = -player->movement.x;
+	}
+	else if (key->d == 1)
+	{
+		move_wanted->x = -player->movement.y;
+		move_wanted->y = player->movement.x;
+	}
+}
+
+static void	modif_player_pos(t_key_handl *key, t_player *player, t_grid *grid)
+{
+	t_dvector	move_wanted;
 	t_dvector	new;
 
 	new.x = player->pos.x;
 	new.y = player->pos.y;
-	tested_move.x = 0;
-	tested_move.y = 0;
-	if (key.key_w == 1)
+	move_wanted = (t_dvector){0, 0};
+	key_manage_wasd(key, player, &move_wanted);
+	if (!try_move(grid, &new, move_wanted.x, move_wanted.y))
 	{
-		tested_move.x = player->movement.x;
-		tested_move.y = player->movement.y;
-	}
-	else if (key.key_s == 1)
-	{
-		tested_move.x = -player->movement.x;
-		tested_move.y = -player->movement.y;
-	}
-	else if (key.key_a == 1)
-	{
-		tested_move.x = player->movement.y;
-		tested_move.y = -player->movement.x;
-	}
-	else if (key.key_d == 1)
-	{
-		tested_move.x = -player->movement.y;
-		tested_move.y = player->movement.x;
-	}
-	if (!try_move(grid, &new, tested_move.x, tested_move.y))
-	{
-		if (!try_move(grid, &new, tested_move.x, 0))
-			try_move(grid, &new, 0, tested_move.y);
+		if (!try_move(grid, &new, move_wanted.x, 0))
+			try_move(grid, &new, 0, move_wanted.y);
 	}
 	player->pos.x = new.x;
 	player->pos.y = new.y;
 }
 
-static void	modif_player_dir(t_key_handl key, t_player *player)
+static void	modif_player_dir(t_key_handl *key, t_player *player)
 {
-	if (key.key_left == 1)
+	if (key->left == 1)
 	{
 		player->dir_angle -= PLAYER_ROT_SPEED;
 		if (player->dir_angle < 0)
 			player->dir_angle += 2 * PI;
 	}
-	if (key.key_right == 1)
+	if (key->right == 1)
 	{
 		player->dir_angle += PLAYER_ROT_SPEED;
 		if (player->dir_angle > 2 * PI)
@@ -88,7 +93,7 @@ static void	modif_player_dir(t_key_handl key, t_player *player)
 
 int	modif_player(t_cub3d *data)
 {
-	modif_player_pos(data->key, &(data->player), &(data->grid));
-	modif_player_dir(data->key, &(data->player));
+	modif_player_pos(&(data->key), &(data->player), &(data->grid));
+	modif_player_dir(&(data->key), &(data->player));
 	return (0);
 }

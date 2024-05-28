@@ -21,7 +21,6 @@
 #  define SCREEN_WIDTH 800
 # endif 
 
-
 /*
 ** Define grid limits
 */
@@ -44,7 +43,8 @@
 **Message Definition**
 */
 
-# define E_NB_ARGS "Invalid nuber of arguments: usage: <exe> <map_file>\n"
+# define E_NB_ARGS "Invalid number of arguments: usage: <exe> <map_file>\n"
+# define E_PREPROCESS_MACRO "Invalid values for preprocess macros\n"
 # define FILE_EXTENSION "Error\nWrong file extension. Cub3d need <*.cub>\n"
 # define FILE_PATH "Error\nCannot open file.\n"
 # define SYNTAX_LINE "Error\nInvalid syntax in configuration.\n"
@@ -63,18 +63,21 @@
 /*
 **Game Macro Definition
 */
-# define PI 3.1415926535
-# ifndef FOV
-#  define FOV 66
+// # ifndef FOV
+// #  define FOV 66
+// # endif
+// # define FOV_RAD (FOV * PI / 180)
+// # define PLANE_FOV tan(FOV_RAD / 2)
+# ifndef PLANE_FOV
+#  define PLANE_FOV 0.649408
 # endif
-# define FOV_RAD (FOV * PI / 180)
-# define PLANE_FOV tan(FOV_RAD / 2)
 # ifndef PLAYER_STEP_SIZE
 #  define PLAYER_STEP_SIZE 0.050
 # endif
 # ifndef PLAYER_ROT_SPEED
-#  define PLAYER_ROT_SPEED 0.025
+#  define PLAYER_ROT_SPEED 0.032
 # endif
+# define PI 3.1415926535
 /*
 **Enum Definition
 */
@@ -104,12 +107,12 @@ enum e_id_gc
 
 typedef struct s_key_handl
 {
-	int	key_w;
-	int	key_s;
-	int	key_a;
-	int	key_d;
-	int	key_left;
-	int	key_right;
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
 
 }	t_key_handl;
 
@@ -184,6 +187,16 @@ typedef struct s_image
 	int		line_len;
 	int		endian;
 }	t_image;
+
+typedef struct s_pixel_column
+{
+	int		tex_x;
+	int		tex_y;
+	int		y_start;
+	int		y_end;
+	int		height;
+	int		color;
+}	t_pixel_column;
 
 typedef struct s_texture
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:03:27 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/25 10:11:39 by gemartel         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:04:58 by hanglade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	args_check(int argc, char **argv)
 
 	if (argc != 2)
 		print_and_exit_error(E_NB_ARGS);
+	if (SCREEN_HEIGHT > 1800 || SCREEN_WIDTH > 3200)
+		print_and_exit_error(E_PREPROCESS_MACRO);
 	i = ft_strlen(argv[1]) - 4;
 	if (ft_strcmp(&argv[1][i], ".cub") != 0)
 		print_and_exit_error(FILE_EXTENSION);

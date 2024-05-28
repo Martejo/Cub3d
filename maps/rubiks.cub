@@ -1,9 +1,9 @@
 NO  sprites/rubiksN.xpm
+F   222,184,135
+C   255,248,247
 SO  sprites/rubiksS.xpm
 WE  sprites/rubiksW.xpm
 EA  sprites/rubiksE.xpm
-F   222,184,135
-C   255,248,247
 
         1111111111111111111111111
         1000000000110000000000001
