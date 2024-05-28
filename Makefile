@@ -77,6 +77,6 @@ show : all large
 $(NAME_LARGE) : $(OBJS)
 	make -C libft/
 	make -C minilibx-linux/
-	$(CC) -D PLANE_FOV=1.191754 -D SCREEN_WIDTH=1400 -D SCREEN_HEIGHT=600 -D PLAYER_STEP_SIZE=0.08 -D PLAYER_ROT_SPEED=0.036 $(FLAGS) $(SRCS) -I ./includes -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME_LARGE) -lX11 -lXext -lm -lmlx
+	$(CC) -D PLANE_FOV=1.2 -D SCREEN_WIDTH=1400 -D SCREEN_HEIGHT=600 -D PLAYER_STEP_SIZE=0.08 -D PLAYER_ROT_SPEED=0.036 $(FLAGS) $(SRCS) -I ./includes -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME_LARGE) -lX11 -lXext -lm -lmlx
 
 .PHONY: clean fclean re all large show
