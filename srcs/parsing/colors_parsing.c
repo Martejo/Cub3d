@@ -81,8 +81,10 @@ void	extract_color(t_colors *colors, char *line, int index_color)
 	if (!color)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	i = -1;
-	while (color[++i])
+	while (++i < 3)
 	{
+		if (!color[i])
+			free_and_exit_error(COLOR_FORMAT_ERROR);
 		if (is_int_overflow(color[i]))
 			free_and_exit_error(COLOR_FORMAT_ERROR);
 		rgb[i] = ft_atoi(color[i]);
