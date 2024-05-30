@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parsing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:58:04 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 14:27:36 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 static bool	is_map_charset_valid(char **map)
@@ -44,7 +56,7 @@ static bool	is_map_enclosed_by_walls(char **grid, unsigned int height)
 	unsigned int	y;
 
 	x = 0;
-	y = 1;
+	y = 0;
 	while (grid[y] && y < height)
 	{
 		while (grid[y][x])

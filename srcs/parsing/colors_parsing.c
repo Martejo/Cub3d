@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_parsing.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:57:53 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 14:34:23 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 static int	index_code_color(const char *line_color)
@@ -62,6 +74,7 @@ void	extract_color(t_colors *colors, char *line, int index_color)
 	char	**color;
 	int		rgb[3];
 
+	check_double_color(colors, index_color);
 	i = index_code_color(line);
 	check_format_color(line, i);
 	color = split_gc(&line[i], ',', TMP);
@@ -76,8 +89,5 @@ void	extract_color(t_colors *colors, char *line, int index_color)
 		if (rgb[i] < 0 || rgb[i] > 255)
 			free_and_exit_error(COLOR_FORMAT_ERROR);
 	}
-	if (index_color == 4)
-		colors->floor_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
-	else
-		colors->ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+	save_color(colors, rgb, index_color);
 }

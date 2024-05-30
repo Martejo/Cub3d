@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_errors.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:56:42 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 10:49:47 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 void	print_and_exit_error(char *msg)
@@ -8,7 +20,7 @@ void	print_and_exit_error(char *msg)
 
 void	free_and_exit_error(char *msg)
 {
-	ft_printf_fd(2, "%s%s%s\n", RED, msg, RESET);
+	ft_printf_fd(2, "%s%s%s", RED, msg, RESET);
 	clear_garbage(TEXTURE, free);
 	clear_garbage(GRID, free);
 	clear_garbage(TMP, free);

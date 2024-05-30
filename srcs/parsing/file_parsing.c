@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_parsing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:57:59 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 14:36:55 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 void	test_and_open_file(char *file)
@@ -49,12 +61,32 @@ static char	*file_to_str(char *file)
 	return (file_data);
 }
 
+bool	map_has_empty_line(char *str_file)
+{
+	char	*map;
+
+	map = ft_strtrim(&str_file[find_start_map(str_file)], "\n");
+	if (!map)
+		free_and_exit_error(MALLOC_ERR_MSG);
+	add_to_garbage(map, TMP);
+	while (*map)
+	{
+		if (!ft_strncmp(map, "\n\n", 2))
+			return (true);
+		map++;
+	}
+	del_one_garbage(map, TMP);
+	return (false);
+}
+
 char	**extract_file(char *file)
 {
 	char	*file_str;
 	char	**split_file;
 
 	file_str = file_to_str(file);
+	if (map_has_empty_line(file_str))
+		free_and_exit_error(MAP_LINE_BREAK);
 	split_file = split_gc(file_str, '\n', TMP);
 	if (!split_file)
 		free_and_exit_error(MALLOC_ERR_MSG);

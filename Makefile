@@ -1,10 +1,8 @@
-NAME = cub3d
+NAME = cub3D
 
 all: force $(NAME)
 
-NAME_LARGE = cub3d_large
-
-NAME_SLOW = cub3d_slow
+NAME_LARGE = cub3D_large
 
 CC = gcc
 
@@ -17,10 +15,13 @@ SRCS =	srcs/main.c \
 		srcs/errors/manage_errors.c \
 		srcs/parsing/parsing_handler.c \
 		srcs/parsing/colors_parsing.c \
+		srcs/parsing/colors_parsing_utils.c \
 		srcs/parsing/file_parsing.c \
+		srcs/parsing/file_parsing_utils.c \
 		srcs/parsing/map_parsing.c \
 		srcs/parsing/map_utils_parsing.c \
 		srcs/parsing/texture_parsing.c \
+		srcs/parsing/texture_parsing_utils.c \
 		\
 		srcs/game_loop/controller/key_management.c \
 		\
@@ -44,13 +45,14 @@ OBJS = $(SRCS:.c=.o)
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -I ./includes -Llibft -lft -Lminilibx-linux/ -lmlx_Linux -o $(NAME) -lX11 -lXext -lm -lmlx
 
-%.o: %.c $(INC) Makefile
+%.o: %.c $(INC) Makefile libft/libft.a
 	$(CC) $(FLAGS) -Iincludes/ -c $< -o $@
 
 
 clean:
 	@$(RM) $(OBJS)
 	@make clean -C libft/
+	@make clean -C minilibx-linux/
 
 fclean: clean
 	@rm -f $(NAME) $(NAME_LARGE) $(NAME_SLOW)
@@ -67,11 +69,11 @@ force :
 
 show : all large
 	@echo "Show little map with slow moves and bricks textures\n"
-	@./cub3d ./maps/basic_bricks.cub
+	@./cub3D ./maps/basic_bricks.cub
 	@echo "\nShow big map with fast moves and rubikscube textures\n"
-	@./cub3d_large ./maps/rubiksE.cub
+	@./cub3D_large ./maps/rubiksE.cub
 	@echo "\nShow big map with fast moves and bank textures\n"
-	@./cub3d_large ./maps/bank.cub
+	@./cub3D_large ./maps/bank.cub
 	@make fclean
 
 $(NAME_LARGE) : $(OBJS)

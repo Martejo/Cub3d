@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 11:03:27 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/28 13:21:47 by hanglade         ###   ########.fr       */
+/*   Created: 2024/05/28 14:00:09 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/28 14:00:12 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	args_check(int argc, char **argv)
 	if (argc != 2)
 		print_and_exit_error(E_NB_ARGS);
 	if (SCREEN_HEIGHT > 1800 || SCREEN_WIDTH > 3200
-			|| PLANE_FOV < 0.6 || PLANE_FOV > 1.4 
-			|| PLAYER_ROT_SPEED > 0.1 || PLAYER_STEP_SIZE > 0.2)
+		|| PLANE_FOV < 0.6 || PLANE_FOV > 1.4
+		|| PLAYER_ROT_SPEED > 0.1 || PLAYER_STEP_SIZE > 0.2)
 		print_and_exit_error(E_PREPROCESS_MACRO);
 	i = ft_strlen(argv[1]) - 4;
 	if (ft_strcmp(&argv[1][i], ".cub") != 0)

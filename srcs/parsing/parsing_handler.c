@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_handler.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:58:14 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 14:34:45 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 int	is_empty_line(char *line)
@@ -49,8 +61,8 @@ void	process_config_and_map(t_cub3d *data, char *file)
 	data_file = extract_file(file);
 	if (!data_file)
 		free_and_exit_error(MALLOC_ERR_MSG);
-	data->text_path = calloc_gc(4, sizeof(char **), TEXTURE);
-	if (!data->text_path)
+	data->text_path.text = calloc_gc(4, sizeof(char **), TEXTURE);
+	if (!data->text_path.text)
 		free_and_exit_error(MALLOC_ERR_MSG);
 	i = parse_texture_and_color_lines(data, data_file);
 	extract_grid(&data->grid, &data_file[i]);

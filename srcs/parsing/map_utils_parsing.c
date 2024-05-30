@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_utils_parsing.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 13:58:09 by gemartel          #+#    #+#             */
+/*   Updated: 2024/05/30 14:34:37 by gemartel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 bool	is_space_line(char *str)
@@ -49,13 +61,14 @@ int	get_max_width_grid(char **grid)
 bool	is_char_adjacent_to_space(char **map, int x, int y)
 {
 	if ((map[y][x] == '0' || map[y][x] == 'N'
-		|| map[y][x] == 'S'
-		|| map[y][x] == 'E' || map[y][x] == 'W'
-		|| map[y][x] == 'D')
-		&& (map[y][x + 1] == ' ' || map[y][x + 1] == '\0'
-		|| map[y][x - 1] == ' '
-		|| map[y + 1][x] == ' '
-		|| map[y - 1][x] == ' '))
+	|| map[y][x] == 'S'
+	|| map[y][x] == 'E' || map[y][x] == 'W'
+	|| map[y][x] == 'D')
+	&& (map[y][x + 1] == ' ' || map[y][x + 1] == '\0'
+	|| map[y][x - 1] == ' '
+	|| map[y + 1][x] == ' '
+	|| map[y - 1][x] == ' ' || map[y - 1][x] == '\0'
+	|| map[y + 1][x] == '\0'))
 		return (true);
 	return (false);
 }

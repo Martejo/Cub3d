@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanglade <hanglade@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:07:34 by gemartel          #+#    #+#             */
-/*   Updated: 2024/05/23 14:47:17 by hanglade         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:32:15 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_texture_index_from_line(char *line)
 	else if (line[i] == 'C' && ft_isspace(line[i + 1]))
 		return (C);
 	else
-		free_and_exit_error(SYNTAX_LINE);
+		free_and_exit_error(ID_TEXT_E);
 	return (-1);
 }
 
@@ -61,11 +61,12 @@ int	has_xpm_extension(const char *path)
 	return (0);
 }
 
-void	extract_texture_path(char ***texture, char *line, int index_text)
+void	extract_texture_path(t_text_file *text_path, char *line, int index_text)
 {
 	int		i;
 	char	*path;
 
+	check_double_text(index_text, text_path);
 	i = find_texture_path_start(line);
 	if (i == -1)
 		free_and_exit_error(TEXT_PATH);
@@ -74,12 +75,5 @@ void	extract_texture_path(char ***texture, char *line, int index_text)
 	path = strdup_gc(&line[i], TEXTURE);
 	if (!path)
 		free_and_exit_error(MALLOC_ERR_MSG);
-	if (index_text == NORTH)
-		(*texture)[NORTH] = path;
-	else if (index_text == SOUTH)
-		(*texture)[SOUTH] = path;
-	else if (index_text == EAST)
-		(*texture)[EAST] = path;
-	else if (index_text == WEST)
-		(*texture)[WEST] = path;
+	save_text_path(text_path, index_text, path);
 }

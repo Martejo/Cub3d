@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbicanic <rbicanic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gemartel <gemartel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 21:44:44 by rbicanic          #+#    #+#             */
-/*   Updated: 2022/06/05 17:27:40 by rbicanic         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:01:18 by gemartel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ bool	char_is_next_space(t_map map, int x, int y)
 		|| map.map_strs[y][x] == 'D')
 		&& (map.map_strs[y][x + 1] == ' ' || map.map_strs[y][x + 1] == '\0'
 		|| map.map_strs[y][x - 1] == ' '
-		|| map.map_strs[y + 1][x] == ' '
+		|| map.map_strs[y + 1][x] == ' ' 
 		|| map.map_strs[y - 1][x] == ' '))
+	{
+		
+		printf("AHHH\n");
 		return (true);
+	}
 	return (false);
 }
 
@@ -33,7 +37,10 @@ bool	is_door_bettween_two_walls(t_map map, int x, int y)
 		&& map.map_strs[y - 1][x] == '0' && map.map_strs[y + 1][x] == '0')
 		|| (map.map_strs[y][x + 1] == '0' && map.map_strs[y][x - 1] == '0'
 		&& map.map_strs[y - 1][x] == '1' && map.map_strs[y + 1][x] == '1')))
+	{
+		printf("HOO\n");
 		return (false);
+	}
 	return (true);
 }
 
@@ -43,8 +50,8 @@ bool	ground_is_surronded_by_walls(t_map map)
 	unsigned int	y;
 
 	x = 0;
-	y = 1;
-	while (map.map_strs[y] && y < map.height - 1)
+	y = 0;
+	while (map.map_strs[y] && y < map.height)
 	{
 		while (map.map_strs[y][x])
 		{
@@ -53,7 +60,10 @@ bool	ground_is_surronded_by_walls(t_map map)
 				|| is_space_line(map.map_strs[y]))
 				return (false);
 			if (char_is_next_space(map, x, y))
+			{
+				printf("wesh\n");
 				return (false);
+			}
 			if (!is_door_bettween_two_walls(map, x, y))
 				return (false);
 			x++;
