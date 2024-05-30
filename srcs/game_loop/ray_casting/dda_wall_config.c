@@ -39,9 +39,9 @@ static char	process_wall_orientation(const t_ray *ray, char last_side_tested)
 	else
 	{
 		if (ray->dir.y > 0)
-			return ('S');
-		else
 			return ('N');
+		else
+			return ('S');
 	}
 }
 
